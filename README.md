@@ -25,7 +25,8 @@ the [Reader's](https://github.com/funkypitt/readers-launcher) apps: text only, w
   few seconds. Both need the accessibility service, which hears only which app comes to the front.
 * The question and the sentences each have a few phrasings and change with the day, so they keep
   being read; there are never more of them than this.
-* A home-screen widget: "reflex 23 · 1 h 12" and "tools 2 h 28".
+* A home-screen widget: "reflex 23 · 1 h 12" and "tools 2 h 28". The same two lines as a tile
+  of [Reader's Launcher](https://github.com/funkypitt/readers-launcher) (1.24.0 and later).
 * Everything is read on the phone from Android's own usage events, with the "usage access"
   permission. No network permission: nothing leaves the phone. Six languages.
 

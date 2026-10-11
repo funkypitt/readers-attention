@@ -13,6 +13,7 @@ import com.freedomfighter.readersattention.AndroidRes
 import com.freedomfighter.readersattention.App
 import com.freedomfighter.readersattention.MainActivity
 import com.freedomfighter.readersattention.R
+import com.freedomfighter.readersattention.StateProvider
 import com.freedomfighter.readersattention.Words
 import com.freedomfighter.readersattention.data.Usage
 import kotlin.concurrent.thread
@@ -59,6 +60,7 @@ object AttentionWidget {
 
     fun refresh(context: Context, done: () -> Unit = {}) {
         val ctx = context.applicationContext
+        StateProvider.notifyChanged(ctx) // the launcher's tile reads today again
         val mgr = AppWidgetManager.getInstance(ctx) ?: return done()
         val ids = mgr.getAppWidgetIds(ComponentName(ctx, AttentionWidgetProvider::class.java))
         if (ids.isEmpty()) return done()

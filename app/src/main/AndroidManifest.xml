@@ -64,5 +64,11 @@
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_attention_info" />
         </receiver>
 
+        <!-- today, in words, for Reader's Launcher's tile; the caller is checked in the provider -->
+        <provider
+            android:name=".StateProvider"
+            android:authorities="com.freedomfighter.readersattention"
+            android:exported="true" />
+
     </application>
 </manifest>

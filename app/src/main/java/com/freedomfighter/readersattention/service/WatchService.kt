@@ -28,6 +28,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.freedomfighter.readersattention.AndroidRes
 import com.freedomfighter.readersattention.App
 import com.freedomfighter.readersattention.R
+import com.freedomfighter.readersattention.StateProvider
 import com.freedomfighter.readersattention.Words
 import com.freedomfighter.readersattention.data.FontChoice
 import com.freedomfighter.readersattention.data.PAUSE_FIRM
@@ -102,6 +103,7 @@ class WatchService : AccessibilityService() {
         if (!isActivity(pkg, cls)) return // dialogs, menus, keyboards: the front app has not changed
         if (pkg == front) return
         front = pkg; frontSince = System.currentTimeMillis()
+        StateProvider.notifyChanged(this) // an app was left: the launcher's tile may be looked at next
         if (pausePkg != null && pausePkg != pkg) removePause()
         cancelWord()
         if (pkg in excluded) return
