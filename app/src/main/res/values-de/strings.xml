@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_title">Aufmerksamkeit</string>
+    <string name="reflex">Reflex</string>
+    <string name="tools">Werkzeuge</string>
+    <string name="week">Woche</string>
+    <string name="today">heute</string>
+    <string name="yesterday">gestern</string>
+
+    <plurals name="openings">
+        <item quantity="one">%d Öffnung</item>
+        <item quantity="other">%d Öffnungen</item>
+    </plurals>
+    <plurals name="unlocks">
+        <item quantity="one">%d Entsperrung</item>
+        <item quantity="other">%d Entsperrungen</item>
+    </plurals>
+    <plurals name="apps">
+        <item quantity="one">%d App</item>
+        <item quantity="other">%d Apps</item>
+    </plurals>
+    <string name="dur_h_min">%1$d h %2$02d</string>
+    <string name="dur_h">%1$d h</string>
+    <string name="dur_min">%1$d min</string>
+    <string name="dur_s">%1$d s</string>
+    <string name="pair">%1$s · %2$s</string>
+
+    <string name="screen_line">Bildschirm %1$s · %2$s</string>
+    <plurals name="first_after_unlock">
+        <item quantity="one">nach dem Entsperren kam eine Reflex-App einmal von %2$d zuerst</item>
+        <item quantity="other">nach dem Entsperren kam eine Reflex-App %1$d-mal von %2$d zuerst</item>
+    </plurals>
+    <string name="longest">längste Strecke: %1$s, %2$s, ab %3$s</string>
+    <string name="evening">nach %1$s: %2$s in Reflex-Apps</string>
+    <plurals name="checks">
+        <item quantity="one">%1$s einmal für weniger als eine Minute geöffnet</item>
+        <item quantity="other">%1$s %2$d-mal für weniger als eine Minute geöffnet</item>
+    </plurals>
+    <string name="app_line">%1$s · %2$s · längstens %3$s</string>
+    <string name="no_reflex">heute keine Reflex-App geöffnet</string>
+    <string name="no_tools">heute kein Werkzeug geöffnet</string>
+    <string name="no_openings">heute keine Öffnung</string>
+    <string name="count_tool">als Werkzeug zählen</string>
+    <string name="count_reflex">als Reflex zählen</string>
+    <string name="see_day">die Öffnungen des Tages sehen</string>
+    <string name="week_avg">letzte Woche: %1$d am Tag · %2$s</string>
+    <string name="week_none">noch nichts für die vorigen Tage</string>
+
+    <string name="setup_title">noch ein Schritt</string>
+    <string name="setup_text">Diese App liest auf dem Telefon selbst, welche Apps wann in den Vordergrund kamen. Daraus zählt sie die Öffnungen der Apps, die man aus Reflex öffnet, soziale Netzwerke, Spiele, kurze Videos, und unterscheidet sie von denen, die man als Werkzeug braucht. Nichts verlässt das Telefon, und nichts wird gesperrt.</string>
+    <string name="allow_usage">Nutzungszugriff erlauben</string>
+    <string name="allow_usage_hint">die Systemseite, auf der diese App den „Nutzungszugriff“ erhält</string>
+    <string name="usage_access">Nutzungszugriff</string>
+    <string name="granted">erteilt</string>
+    <string name="not_granted">nicht erteilt</string>
+
+    <string name="pause_title">eine Pause vor einer Reflex-App</string>
+    <string name="pause_hint">Wenn eine Reflex-App in den Vordergrund kommt: ihr Name, die Zahl des Tages und eine Frage. Leicht: ein Grund zum Antippen, dann „weiter“ nach sechs Sekunden. Fest: der Grund in ein paar Worten getippt, und zwölf Sekunden. Abends länger. Weiter geht es immer. Braucht den Bedienungshilfen-Dienst unten.</string>
+    <string name="word_title">ein Wort nach einer Weile</string>
+    <string name="word_after">nach %1$d Minuten</string>
+    <string name="word_hint">Eine Zeile oben am Bildschirm, ein paar Sekunden lang, wenn eine Reflex-App so lange im Vordergrund geblieben ist. Braucht den Bedienungshilfen-Dienst unten.</string>
+    <string name="evening_title">der Abend beginnt um</string>
+    <string name="evening_hint">Nach dieser Stunde dauert die Pause länger, und die Reflex-Minuten des Abends werden auf der ersten Seite gezählt.</string>
+    <string name="accessibility">Bedienungshilfen-Dienst</string>
+    <string name="accessibility_hint">Der Dienst hört nur, welche App in den Vordergrund kommt. Er liest nichts auf dem Bildschirm und macht keine Geste.</string>
+    <string name="accessibility_desc">Reader\'s Attention beobachtet nur, welche App in den Vordergrund kommt, um eine Pause vor einer Reflex-App und ein Wort nach einer Weile anzubieten. Es liest nichts auf dem Bildschirm, macht keine Geste, und nichts verlässt das Telefon.</string>
+    <string name="answer_1">jemandem antworten</string>
+    <string name="answer_2">etwas veröffentlichen</string>
+    <string name="answer_3">etwas nachschauen</string>
+    <string name="answer_4">nichts Bestimmtes</string>
+    <string name="go_on">weiter</string>
+    <string name="not_now">jetzt nicht</string>
+    <string name="pause_today">heute: %1$s · %2$s</string>
+    <string name="minutes_in">%1$d Minuten in %2$s</string>
+
+    <string name="widget_desc">die Reflex-Öffnungen und -Zeit des Tages, die Zeit der Werkzeuge</string>
+    <string name="widget_reflex">Reflex %1$d · %2$s</string>
+    <string name="widget_tools">Werkzeuge %1$s</string>
+
+    <string name="about">welche Apps man aus Reflex öffnet, und wie oft</string>
+    <string name="action_ok">ok</string>
+    <string name="action_cancel">abbrechen</string>
+    <string name="settings">Einstellungen</string>
+    <string name="theme_dark">weiß auf schwarz</string>
+    <string name="theme_light">schwarz auf weiß</string>
+    <string name="colours">Farben</string>
+    <string name="text_size">Textgröße</string>
+    <string name="font">Schrift</string>
+    <string name="font_sans">serifenlos</string>
+    <string name="font_serif">mit Serifen</string>
+    <string name="font_mono">mono</string>
+    <string name="size_small">klein</string>
+    <string name="size_medium">mittel</string>
+    <string name="size_large">groß</string>
+    <string name="haptics">haptisches Tippen</string>
+    <string name="on">an</string>
+    <string name="off">aus</string>
+    <string name="credits">Pierre Gallaz · entwickelt mit Claude Code</string>
+
+    <string name="pause_light">leicht</string>
+    <string name="pause_firm">fest</string>
+    <string name="type_reason">warum, in ein paar Worten</string>
+    <string name="type_first">erst ein paar Worte</string>
+    <string name="nudge">die Zahlen allein ändern wenig — eine Pause vor einer Reflex-App schon</string>
+    <string-array name="what_for">
+        <item>wozu?</item>
+        <item>was suchst du hier?</item>
+        <item>was erwartest du davon?</item>
+        <item>warum jetzt?</item>
+    </string-array>
+    <plurals name="first_after_unlock_2">
+        <item quantity="one">eine Entsperrung von %2$d führte geradewegs in eine Reflex-App</item>
+        <item quantity="other">%1$d Entsperrungen von %2$d führten geradewegs in eine Reflex-App</item>
+    </plurals>
+    <plurals name="first_after_unlock_3">
+        <item quantity="one">das Erste nach dem Entsperren war einmal von %2$d eine Reflex-App</item>
+        <item quantity="other">das Erste nach dem Entsperren war %1$d-mal von %2$d eine Reflex-App</item>
+    </plurals>
+    <string name="longest_2">der längste Aufenthalt: %2$s in %1$s, ab %3$s</string>
+    <string name="longest_3">%1$s hielt dich %2$s am Stück, ab %3$s</string>
+    <string name="evening_2">der Abend, nach %1$s, gab %2$s an Reflex-Apps</string>
+    <string name="evening_3">%2$s in Reflex-Apps, nachdem %1$s vorbei war</string>
+    <plurals name="checks_2">
+        <item quantity="one">%1$s innerhalb einer Minute geöffnet und geschlossen, einmal</item>
+        <item quantity="other">%1$s innerhalb einer Minute geöffnet und geschlossen, %2$d-mal</item>
+    </plurals>
+    <plurals name="checks_3">
+        <item quantity="one">ein kurzer Blick in %1$s, unter einer Minute</item>
+        <item quantity="other">%2$d kurze Blicke in %1$s, jeder unter einer Minute</item>
+    </plurals>
+</resources>

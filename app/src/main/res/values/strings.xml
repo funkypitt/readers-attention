@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Reader\'s Attention</string>
+    <string name="app_title">attention</string>
+    <string name="reflex">reflex</string>
+    <string name="tools">tools</string>
+    <string name="week">week</string>
+    <string name="today">today</string>
+    <string name="yesterday">yesterday</string>
+
+    <!-- numbers -->
+    <plurals name="openings">
+        <item quantity="one">%d opening</item>
+        <item quantity="other">%d openings</item>
+    </plurals>
+    <plurals name="unlocks">
+        <item quantity="one">%d unlock</item>
+        <item quantity="other">%d unlocks</item>
+    </plurals>
+    <plurals name="apps">
+        <item quantity="one">%d app</item>
+        <item quantity="other">%d apps</item>
+    </plurals>
+    <string name="dur_h_min">%1$d h %2$02d</string>
+    <string name="dur_h">%1$d h</string>
+    <string name="dur_min">%1$d min</string>
+    <string name="dur_s">%1$d s</string>
+    <!-- two parts of one line -->
+    <string name="pair">%1$s · %2$s</string>
+
+    <!-- the day in words -->
+    <string name="screen_line">screen %1$s · %2$s</string>
+    <plurals name="first_after_unlock">
+        <item quantity="one">after unlocking, a reflex app came first once out of %2$d</item>
+        <item quantity="other">after unlocking, a reflex app came first %1$d times out of %2$d</item>
+    </plurals>
+    <string name="longest">longest stretch: %1$s, %2$s, from %3$s</string>
+    <string name="evening">after %1$s: %2$s of reflex apps</string>
+    <plurals name="checks">
+        <item quantity="one">checked %1$s once for less than a minute</item>
+        <item quantity="other">checked %1$s %2$d times for less than a minute</item>
+    </plurals>
+    <string name="app_line">%1$s · %2$s · longest %3$s</string>
+    <string name="no_reflex">no reflex app opened today</string>
+    <string name="no_tools">no tool opened today</string>
+    <string name="no_openings">no openings today</string>
+    <string name="count_tool">count as a tool</string>
+    <string name="count_reflex">count as reflex</string>
+    <string name="see_day">see the day\'s openings</string>
+    <string name="week_avg">last week: %1$d a day · %2$s</string>
+    <string name="week_none">nothing yet for the previous days</string>
+
+    <!-- usage access -->
+    <string name="setup_title">one step left</string>
+    <string name="setup_text">This app reads, on the phone itself, which apps came to the front and when. From that it counts the openings of the apps you open by reflex, social networks, games, short video, and tells them from the ones you use as tools. Nothing leaves the phone, and nothing is blocked.</string>
+    <string name="allow_usage">allow usage access</string>
+    <string name="allow_usage_hint">the system page where this app is given “usage access”</string>
+    <string name="usage_access">usage access</string>
+    <string name="granted">granted</string>
+    <string name="not_granted">not granted</string>
+
+    <!-- interventions -->
+    <string name="pause_title">a pause before a reflex app</string>
+    <string name="pause_hint">When a reflex app comes to the front: its name, today’s count, and a question. Light: a reason to tap, then “go on” after six seconds. Firm: the reason typed in a few words, and twelve seconds. Longer in the evening. You can always go on. Needs the accessibility service below.</string>
+    <string name="word_title">a word after a while</string>
+    <string name="word_after">after %1$d minutes</string>
+    <string name="word_hint">One line at the top of the screen, for a few seconds, when a reflex app has stayed in front that long. Needs the accessibility service below.</string>
+    <string name="evening_title">the evening starts at</string>
+    <string name="evening_hint">After this hour the pause lasts longer, and the evening’s reflex minutes are counted on the first page.</string>
+    <string name="accessibility">accessibility service</string>
+    <string name="accessibility_hint">The service hears only which app comes to the front. It reads nothing on the screen and performs no gesture.</string>
+    <string name="accessibility_desc">Reader\'s Attention watches only which app comes to the front, to offer a pause before a reflex app and a word after a while. It reads nothing on the screen, performs no gesture, and nothing leaves the phone.</string>
+    <string name="answer_1">to answer someone</string>
+    <string name="answer_2">to post something</string>
+    <string name="answer_3">to look something up</string>
+    <string name="answer_4">nothing in particular</string>
+    <string name="go_on">go on</string>
+    <string name="not_now">not now</string>
+    <string name="pause_today">today: %1$s · %2$s</string>
+    <string name="minutes_in">%1$d minutes in %2$s</string>
+
+    <!-- widget -->
+    <string name="widget_desc">today’s reflex openings and time, the tools’ time</string>
+    <string name="widget_reflex">reflex %1$d · %2$s</string>
+    <string name="widget_tools">tools %1$s</string>
+
+    <!-- settings -->
+    <string name="about">which apps you open by reflex, and how often</string>
+    <string name="action_ok">ok</string>
+    <string name="action_cancel">cancel</string>
+    <string name="settings">settings</string>
+    <string name="theme_dark">white on black</string>
+    <string name="theme_light">black on white</string>
+    <string name="colours">colours</string>
+    <string name="text_size">text size</string>
+    <string name="font">font</string>
+    <string name="font_sans">sans-serif</string>
+    <string name="font_serif">serif</string>
+    <string name="font_mono">mono</string>
+    <string name="size_small">small</string>
+    <string name="size_medium">medium</string>
+    <string name="size_large">large</string>
+    <string name="haptics">haptic tick</string>
+    <string name="on">on</string>
+    <string name="off">off</string>
+    <string name="credits">Pierre Gallaz · developed with Claude Code</string>
+
+    <string name="pause_light">light</string>
+    <string name="pause_firm">firm</string>
+    <string name="type_reason">why, in a few words</string>
+    <string name="type_first">a few words first</string>
+    <string name="nudge">the numbers alone change little — a pause before a reflex app does</string>
+    <string-array name="what_for">
+        <item>what for?</item>
+        <item>what are you here for?</item>
+        <item>what do you want from it?</item>
+        <item>why now?</item>
+    </string-array>
+    <plurals name="first_after_unlock_2">
+        <item quantity="one">one unlock out of %2$d went straight to a reflex app</item>
+        <item quantity="other">%1$d unlocks out of %2$d went straight to a reflex app</item>
+    </plurals>
+    <plurals name="first_after_unlock_3">
+        <item quantity="one">the first thing opened after unlocking was a reflex app once out of %2$d</item>
+        <item quantity="other">the first thing opened after unlocking was a reflex app %1$d times out of %2$d</item>
+    </plurals>
+    <string name="longest_2">the longest stay: %2$s in %1$s, starting %3$s</string>
+    <string name="longest_3">%1$s kept you %2$s in one go, from %3$s</string>
+    <string name="evening_2">the evening, after %1$s, gave %2$s to reflex apps</string>
+    <string name="evening_3">%2$s of reflex apps once %1$s had passed</string>
+    <plurals name="checks_2">
+        <item quantity="one">%1$s opened and closed within a minute, once</item>
+        <item quantity="other">%1$s opened and closed within a minute, %2$d times</item>
+    </plurals>
+    <plurals name="checks_3">
+        <item quantity="one">one quick look at %1$s, under a minute</item>
+        <item quantity="other">%2$d quick looks at %1$s, each under a minute</item>
+    </plurals>
+</resources>

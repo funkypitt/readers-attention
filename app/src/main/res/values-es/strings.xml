@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_title">atención</string>
+    <string name="reflex">reflejo</string>
+    <string name="tools">herramientas</string>
+    <string name="week">semana</string>
+    <string name="today">hoy</string>
+    <string name="yesterday">ayer</string>
+
+    <plurals name="openings">
+        <item quantity="one">%d apertura</item>
+        <item quantity="other">%d aperturas</item>
+    </plurals>
+    <plurals name="unlocks">
+        <item quantity="one">%d desbloqueo</item>
+        <item quantity="other">%d desbloqueos</item>
+    </plurals>
+    <plurals name="apps">
+        <item quantity="one">%d app</item>
+        <item quantity="other">%d apps</item>
+    </plurals>
+    <string name="dur_h_min">%1$d h %2$02d</string>
+    <string name="dur_h">%1$d h</string>
+    <string name="dur_min">%1$d min</string>
+    <string name="dur_s">%1$d s</string>
+    <string name="pair">%1$s · %2$s</string>
+
+    <string name="screen_line">pantalla %1$s · %2$s</string>
+    <plurals name="first_after_unlock">
+        <item quantity="one">tras desbloquear, una app reflejo fue la primera una vez de %2$d</item>
+        <item quantity="other">tras desbloquear, una app reflejo fue la primera %1$d veces de %2$d</item>
+    </plurals>
+    <string name="longest">racha más larga: %1$s, %2$s, desde las %3$s</string>
+    <string name="evening">después de las %1$s: %2$s de apps reflejo</string>
+    <plurals name="checks">
+        <item quantity="one">%1$s consultada una vez por menos de un minuto</item>
+        <item quantity="other">%1$s consultada %2$d veces por menos de un minuto</item>
+    </plurals>
+    <string name="app_line">%1$s · %2$s · máximo %3$s</string>
+    <string name="no_reflex">ninguna app reflejo abierta hoy</string>
+    <string name="no_tools">ninguna herramienta abierta hoy</string>
+    <string name="no_openings">ninguna apertura hoy</string>
+    <string name="count_tool">contar como herramienta</string>
+    <string name="count_reflex">contar como reflejo</string>
+    <string name="see_day">ver las aperturas del día</string>
+    <string name="week_avg">la semana pasada: %1$d al día · %2$s</string>
+    <string name="week_none">nada todavía de los días anteriores</string>
+
+    <string name="setup_title">falta un paso</string>
+    <string name="setup_text">Esta app lee, en el propio teléfono, qué apps pasaron al frente y cuándo. Con eso cuenta las aperturas de las apps que se abren por reflejo, redes sociales, juegos, vídeos cortos, y las distingue de las que se usan como herramientas. Nada sale del teléfono, y nada se bloquea.</string>
+    <string name="allow_usage">permitir el acceso al uso</string>
+    <string name="allow_usage_hint">la página del sistema donde se da a esta app el «acceso al uso»</string>
+    <string name="usage_access">acceso al uso</string>
+    <string name="granted">concedido</string>
+    <string name="not_granted">no concedido</string>
+
+    <string name="pause_title">una pausa antes de una app reflejo</string>
+    <string name="pause_hint">Cuando una app reflejo pasa al frente: su nombre, la cuenta del día y una pregunta. Ligera: un motivo que tocar, y «seguir» tras seis segundos. Firme: el motivo escrito en pocas palabras, y doce segundos. Más larga de noche. Siempre se puede seguir. Necesita el servicio de accesibilidad de abajo.</string>
+    <string name="word_title">una palabra al cabo de un rato</string>
+    <string name="word_after">tras %1$d minutos</string>
+    <string name="word_hint">Una línea arriba de la pantalla, unos segundos, cuando una app reflejo lleva tanto tiempo al frente. Necesita el servicio de accesibilidad de abajo.</string>
+    <string name="evening_title">la noche empieza a las</string>
+    <string name="evening_hint">Después de esta hora la pausa dura más, y los minutos reflejo de la noche se cuentan en la primera página.</string>
+    <string name="accessibility">servicio de accesibilidad</string>
+    <string name="accessibility_hint">El servicio solo oye qué app pasa al frente. No lee nada en la pantalla y no hace ningún gesto.</string>
+    <string name="accessibility_desc">Reader\'s Attention observa solo qué app pasa al frente, para ofrecer una pausa antes de una app reflejo y una palabra al cabo de un rato. No lee nada en la pantalla, no hace ningún gesto, y nada sale del teléfono.</string>
+    <string name="answer_1">responder a alguien</string>
+    <string name="answer_2">publicar algo</string>
+    <string name="answer_3">buscar algo</string>
+    <string name="answer_4">nada en particular</string>
+    <string name="go_on">seguir</string>
+    <string name="not_now">ahora no</string>
+    <string name="pause_today">hoy: %1$s · %2$s</string>
+    <string name="minutes_in">%1$d minutos en %2$s</string>
+
+    <string name="widget_desc">las aperturas y el tiempo reflejo del día, el tiempo de las herramientas</string>
+    <string name="widget_reflex">reflejo %1$d · %2$s</string>
+    <string name="widget_tools">herramientas %1$s</string>
+
+    <string name="about">qué apps se abren por reflejo, y cuántas veces</string>
+    <string name="action_ok">ok</string>
+    <string name="action_cancel">cancelar</string>
+    <string name="settings">ajustes</string>
+    <string name="theme_dark">blanco sobre negro</string>
+    <string name="theme_light">negro sobre blanco</string>
+    <string name="colours">colores</string>
+    <string name="text_size">tamaño del texto</string>
+    <string name="font">tipografía</string>
+    <string name="font_sans">sin serifa</string>
+    <string name="font_serif">con serifa</string>
+    <string name="font_mono">mono</string>
+    <string name="size_small">pequeño</string>
+    <string name="size_medium">mediano</string>
+    <string name="size_large">grande</string>
+    <string name="haptics">vibración al tocar</string>
+    <string name="on">activado</string>
+    <string name="off">desactivado</string>
+    <string name="credits">Pierre Gallaz · desarrollado con Claude Code</string>
+
+    <string name="pause_light">ligera</string>
+    <string name="pause_firm">firme</string>
+    <string name="type_reason">por qué, en pocas palabras</string>
+    <string name="type_first">primero unas palabras</string>
+    <string name="nudge">los números solos cambian poco — una pausa antes de una app reflejo, sí</string>
+    <string-array name="what_for">
+        <item>¿para qué?</item>
+        <item>¿a qué vienes?</item>
+        <item>¿qué esperas de ella?</item>
+        <item>¿por qué ahora?</item>
+    </string-array>
+    <plurals name="first_after_unlock_2">
+        <item quantity="one">un desbloqueo de %2$d llevó derecho a una app reflejo</item>
+        <item quantity="other">%1$d desbloqueos de %2$d llevaron derecho a una app reflejo</item>
+    </plurals>
+    <plurals name="first_after_unlock_3">
+        <item quantity="one">lo primero abierto tras desbloquear fue una app reflejo una vez de %2$d</item>
+        <item quantity="other">lo primero abierto tras desbloquear fue una app reflejo %1$d veces de %2$d</item>
+    </plurals>
+    <string name="longest_2">la estancia más larga: %2$s en %1$s, desde las %3$s</string>
+    <string name="longest_3">%1$s te retuvo %2$s de un tirón, desde las %3$s</string>
+    <string name="evening_2">la noche, después de las %1$s, dio %2$s a las apps reflejo</string>
+    <string name="evening_3">%2$s de apps reflejo pasadas las %1$s</string>
+    <plurals name="checks_2">
+        <item quantity="one">%1$s abierta y cerrada en menos de un minuto, una vez</item>
+        <item quantity="other">%1$s abierta y cerrada en menos de un minuto, %2$d veces</item>
+    </plurals>
+    <plurals name="checks_3">
+        <item quantity="one">un vistazo a %1$s, de menos de un minuto</item>
+        <item quantity="other">%2$d vistazos a %1$s, cada uno de menos de un minuto</item>
+    </plurals>
+</resources>

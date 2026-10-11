@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_title">attention</string>
+    <string name="reflex">réflexe</string>
+    <string name="tools">outils</string>
+    <string name="week">semaine</string>
+    <string name="today">aujourd’hui</string>
+    <string name="yesterday">hier</string>
+
+    <plurals name="openings">
+        <item quantity="one">%d ouverture</item>
+        <item quantity="other">%d ouvertures</item>
+    </plurals>
+    <plurals name="unlocks">
+        <item quantity="one">%d déverrouillage</item>
+        <item quantity="other">%d déverrouillages</item>
+    </plurals>
+    <plurals name="apps">
+        <item quantity="one">%d appli</item>
+        <item quantity="other">%d applis</item>
+    </plurals>
+    <string name="dur_h_min">%1$d h %2$02d</string>
+    <string name="dur_h">%1$d h</string>
+    <string name="dur_min">%1$d min</string>
+    <string name="dur_s">%1$d s</string>
+    <string name="pair">%1$s · %2$s</string>
+
+    <string name="screen_line">écran %1$s · %2$s</string>
+    <plurals name="first_after_unlock">
+        <item quantity="one">après le déverrouillage, une appli réflexe est venue en premier une fois sur %2$d</item>
+        <item quantity="other">après le déverrouillage, une appli réflexe est venue en premier %1$d fois sur %2$d</item>
+    </plurals>
+    <string name="longest">plus longue séquence : %1$s, %2$s, dès %3$s</string>
+    <string name="evening">après %1$s : %2$s d’applis réflexes</string>
+    <plurals name="checks">
+        <item quantity="one">%1$s consulté une fois pour moins d’une minute</item>
+        <item quantity="other">%1$s consulté %2$d fois pour moins d’une minute</item>
+    </plurals>
+    <string name="app_line">%1$s · %2$s · au plus %3$s</string>
+    <string name="no_reflex">aucune appli réflexe ouverte aujourd’hui</string>
+    <string name="no_tools">aucun outil ouvert aujourd’hui</string>
+    <string name="no_openings">aucune ouverture aujourd’hui</string>
+    <string name="count_tool">compter comme un outil</string>
+    <string name="count_reflex">compter comme réflexe</string>
+    <string name="see_day">voir les ouvertures du jour</string>
+    <string name="week_avg">la semaine passée : %1$d par jour · %2$s</string>
+    <string name="week_none">rien encore pour les jours précédents</string>
+
+    <string name="setup_title">encore une étape</string>
+    <string name="setup_text">Cette appli lit, sur le téléphone même, quelles applis sont passées au premier plan et quand. Elle en tire le compte des ouvertures des applis qu’on ouvre par réflexe, réseaux sociaux, jeux, vidéos courtes, et les distingue de celles qu’on utilise comme outils. Rien ne quitte le téléphone, et rien n’est bloqué.</string>
+    <string name="allow_usage">autoriser l’accès aux données d’utilisation</string>
+    <string name="allow_usage_hint">la page du système où l’on donne à cette appli l’« accès aux données d’utilisation »</string>
+    <string name="usage_access">accès aux données d’utilisation</string>
+    <string name="granted">accordé</string>
+    <string name="not_granted">pas accordé</string>
+
+    <string name="pause_title">une pause avant une appli réflexe</string>
+    <string name="pause_hint">Quand une appli réflexe passe au premier plan : son nom, le compte du jour, et une question. Légère : une raison à toucher, puis « continuer » après six secondes. Ferme : la raison tapée en quelques mots, et douze secondes. Plus long le soir. On peut toujours continuer. Demande le service d’accessibilité ci-dessous.</string>
+    <string name="word_title">un mot après un moment</string>
+    <string name="word_after">après %1$d minutes</string>
+    <string name="word_hint">Une ligne en haut de l’écran, quelques secondes, quand une appli réflexe est restée au premier plan tout ce temps. Demande le service d’accessibilité ci-dessous.</string>
+    <string name="evening_title">le soir commence à</string>
+    <string name="evening_hint">Après cette heure la pause dure plus longtemps, et les minutes réflexes du soir sont comptées sur la première page.</string>
+    <string name="accessibility">service d’accessibilité</string>
+    <string name="accessibility_hint">Le service n’entend que l’appli qui passe au premier plan. Il ne lit rien à l’écran et ne fait aucun geste.</string>
+    <string name="accessibility_desc">Reader\'s Attention observe seulement quelle appli passe au premier plan, pour proposer une pause avant une appli réflexe et un mot après un moment. Il ne lit rien à l’écran, ne fait aucun geste, et rien ne quitte le téléphone.</string>
+    <string name="answer_1">répondre à quelqu’un</string>
+    <string name="answer_2">publier quelque chose</string>
+    <string name="answer_3">chercher quelque chose</string>
+    <string name="answer_4">rien de particulier</string>
+    <string name="go_on">continuer</string>
+    <string name="not_now">pas maintenant</string>
+    <string name="pause_today">aujourd’hui : %1$s · %2$s</string>
+    <string name="minutes_in">%1$d minutes dans %2$s</string>
+
+    <string name="widget_desc">les ouvertures et le temps réflexes du jour, le temps des outils</string>
+    <string name="widget_reflex">réflexe %1$d · %2$s</string>
+    <string name="widget_tools">outils %1$s</string>
+
+    <string name="about">quelles applis on ouvre par réflexe, et combien de fois</string>
+    <string name="action_ok">ok</string>
+    <string name="action_cancel">annuler</string>
+    <string name="settings">réglages</string>
+    <string name="theme_dark">blanc sur noir</string>
+    <string name="theme_light">noir sur blanc</string>
+    <string name="colours">couleurs</string>
+    <string name="text_size">taille du texte</string>
+    <string name="font">police</string>
+    <string name="font_sans">sans empattement</string>
+    <string name="font_serif">avec empattement</string>
+    <string name="font_mono">mono</string>
+    <string name="size_small">petit</string>
+    <string name="size_medium">moyen</string>
+    <string name="size_large">grand</string>
+    <string name="haptics">retour haptique</string>
+    <string name="on">actif</string>
+    <string name="off">inactif</string>
+    <string name="credits">Pierre Gallaz · développé avec Claude Code</string>
+
+    <string name="pause_light">légère</string>
+    <string name="pause_firm">ferme</string>
+    <string name="type_reason">pourquoi, en quelques mots</string>
+    <string name="type_first">quelques mots d’abord</string>
+    <string name="nudge">les chiffres seuls changent peu — une pause avant une appli réflexe, oui</string>
+    <string-array name="what_for">
+        <item>pour quoi faire ?</item>
+        <item>vous venez chercher quoi ?</item>
+        <item>qu’en attendez-vous ?</item>
+        <item>pourquoi maintenant ?</item>
+    </string-array>
+    <plurals name="first_after_unlock_2">
+        <item quantity="one">un déverrouillage sur %2$d a mené droit à une appli réflexe</item>
+        <item quantity="other">%1$d déverrouillages sur %2$d ont mené droit à une appli réflexe</item>
+    </plurals>
+    <plurals name="first_after_unlock_3">
+        <item quantity="one">la première chose ouverte après le déverrouillage était une appli réflexe une fois sur %2$d</item>
+        <item quantity="other">la première chose ouverte après le déverrouillage était une appli réflexe %1$d fois sur %2$d</item>
+    </plurals>
+    <string name="longest_2">le plus long séjour : %2$s dans %1$s, à partir de %3$s</string>
+    <string name="longest_3">%1$s vous a gardé %2$s d’une traite, dès %3$s</string>
+    <string name="evening_2">la soirée, après %1$s, a donné %2$s aux applis réflexes</string>
+    <string name="evening_3">%2$s d’applis réflexes une fois %1$s passé</string>
+    <plurals name="checks_2">
+        <item quantity="one">%1$s ouvert et refermé en moins d’une minute, une fois</item>
+        <item quantity="other">%1$s ouvert et refermé en moins d’une minute, %2$d fois</item>
+    </plurals>
+    <plurals name="checks_3">
+        <item quantity="one">un coup d’œil à %1$s, moins d’une minute</item>
+        <item quantity="other">%2$d coups d’œil à %1$s, chacun de moins d’une minute</item>
+    </plurals>
+</resources>

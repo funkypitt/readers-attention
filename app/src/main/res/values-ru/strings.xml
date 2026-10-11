@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_title">внимание</string>
+    <string name="reflex">рефлекс</string>
+    <string name="tools">инструменты</string>
+    <string name="week">неделя</string>
+    <string name="today">сегодня</string>
+    <string name="yesterday">вчера</string>
+
+    <plurals name="openings">
+        <item quantity="one">%d открытие</item>
+        <item quantity="few">%d открытия</item>
+        <item quantity="many">%d открытий</item>
+        <item quantity="other">%d открытия</item>
+    </plurals>
+    <plurals name="unlocks">
+        <item quantity="one">%d разблокировка</item>
+        <item quantity="few">%d разблокировки</item>
+        <item quantity="many">%d разблокировок</item>
+        <item quantity="other">%d разблокировки</item>
+    </plurals>
+    <plurals name="apps">
+        <item quantity="one">%d приложение</item>
+        <item quantity="few">%d приложения</item>
+        <item quantity="many">%d приложений</item>
+        <item quantity="other">%d приложения</item>
+    </plurals>
+    <string name="dur_h_min">%1$d ч %2$02d</string>
+    <string name="dur_h">%1$d ч</string>
+    <string name="dur_min">%1$d мин</string>
+    <string name="dur_s">%1$d с</string>
+    <string name="pair">%1$s · %2$s</string>
+
+    <string name="screen_line">экран %1$s · %2$s</string>
+    <plurals name="first_after_unlock">
+        <item quantity="one">после разблокировки рефлекторное приложение открывалось первым %1$d раз из %2$d</item>
+        <item quantity="few">после разблокировки рефлекторное приложение открывалось первым %1$d раза из %2$d</item>
+        <item quantity="many">после разблокировки рефлекторное приложение открывалось первым %1$d раз из %2$d</item>
+        <item quantity="other">после разблокировки рефлекторное приложение открывалось первым %1$d раза из %2$d</item>
+    </plurals>
+    <string name="longest">самый долгий отрезок: %1$s, %2$s, с %3$s</string>
+    <string name="evening">после %1$s: %2$s в рефлекторных приложениях</string>
+    <plurals name="checks">
+        <item quantity="one">%1$s открыто %2$d раз меньше чем на минуту</item>
+        <item quantity="few">%1$s открыто %2$d раза меньше чем на минуту</item>
+        <item quantity="many">%1$s открыто %2$d раз меньше чем на минуту</item>
+        <item quantity="other">%1$s открыто %2$d раза меньше чем на минуту</item>
+    </plurals>
+    <string name="app_line">%1$s · %2$s · дольше всего %3$s</string>
+    <string name="no_reflex">сегодня рефлекторные приложения не открывались</string>
+    <string name="no_tools">сегодня инструменты не открывались</string>
+    <string name="no_openings">сегодня не открывалось</string>
+    <string name="count_tool">считать инструментом</string>
+    <string name="count_reflex">считать рефлексом</string>
+    <string name="see_day">открытия за день</string>
+    <string name="week_avg">прошлая неделя: %1$d в день · %2$s</string>
+    <string name="week_none">за прошлые дни пока ничего</string>
+
+    <string name="setup_title">остался один шаг</string>
+    <string name="setup_text">Приложение читает, на самом телефоне, какие приложения выходили на передний план и когда. Из этого оно считает открытия приложений, которые открывают рефлекторно, социальные сети, игры, короткие видео, и отличает их от тех, что служат инструментами. Ничто не покидает телефон, и ничто не блокируется.</string>
+    <string name="allow_usage">разрешить доступ к данным об использовании</string>
+    <string name="allow_usage_hint">страница системы, где приложению дают «доступ к данным об использовании»</string>
+    <string name="usage_access">доступ к данным об использовании</string>
+    <string name="granted">разрешён</string>
+    <string name="not_granted">не разрешён</string>
+
+    <string name="pause_title">пауза перед рефлекторным приложением</string>
+    <string name="pause_hint">Когда рефлекторное приложение выходит на передний план: его название, счёт за день и вопрос. Лёгкая: причина, которую можно нажать, и «продолжить» через шесть секунд. Твёрдая: причина, набранная в нескольких словах, и двенадцать секунд. Вечером дольше. Продолжить можно всегда. Нужна служба специальных возможностей ниже.</string>
+    <string name="word_title">слово спустя время</string>
+    <string name="word_after">через %1$d минут</string>
+    <string name="word_hint">Одна строка вверху экрана, на несколько секунд, когда рефлекторное приложение столько пробыло на переднем плане. Нужна служба специальных возможностей ниже.</string>
+    <string name="evening_title">вечер начинается в</string>
+    <string name="evening_hint">После этого часа пауза длится дольше, а вечерние рефлекторные минуты считаются на первой странице.</string>
+    <string name="accessibility">служба специальных возможностей</string>
+    <string name="accessibility_hint">Служба слышит только, какое приложение выходит на передний план. Она ничего не читает на экране и не делает жестов.</string>
+    <string name="accessibility_desc">Reader\'s Attention следит только за тем, какое приложение выходит на передний план, чтобы предложить паузу перед рефлекторным приложением и слово спустя время. Оно ничего не читает на экране, не делает жестов, и ничто не покидает телефон.</string>
+    <string name="answer_1">ответить кому-то</string>
+    <string name="answer_2">что-то опубликовать</string>
+    <string name="answer_3">что-то посмотреть</string>
+    <string name="answer_4">ничего особенного</string>
+    <string name="go_on">продолжить</string>
+    <string name="not_now">не сейчас</string>
+    <string name="pause_today">сегодня: %1$s · %2$s</string>
+    <string name="minutes_in">%1$d минут в %2$s</string>
+
+    <string name="widget_desc">рефлекторные открытия и время за день, время инструментов</string>
+    <string name="widget_reflex">рефлекс %1$d · %2$s</string>
+    <string name="widget_tools">инструменты %1$s</string>
+
+    <string name="about">какие приложения открывают рефлекторно, и как часто</string>
+    <string name="action_ok">ок</string>
+    <string name="action_cancel">отмена</string>
+    <string name="settings">настройки</string>
+    <string name="theme_dark">белым по чёрному</string>
+    <string name="theme_light">чёрным по белому</string>
+    <string name="colours">цвета</string>
+    <string name="text_size">размер текста</string>
+    <string name="font">шрифт</string>
+    <string name="font_sans">без засечек</string>
+    <string name="font_serif">с засечками</string>
+    <string name="font_mono">моно</string>
+    <string name="size_small">мелкий</string>
+    <string name="size_medium">средний</string>
+    <string name="size_large">крупный</string>
+    <string name="haptics">отклик при касании</string>
+    <string name="on">вкл</string>
+    <string name="off">выкл</string>
+    <string name="credits">Pierre Gallaz · разработано с Claude Code</string>
+
+    <string name="pause_light">лёгкая</string>
+    <string name="pause_firm">твёрдая</string>
+    <string name="type_reason">зачем, в нескольких словах</string>
+    <string name="type_first">сначала несколько слов</string>
+    <string name="nudge">одни цифры мало что меняют — пауза перед рефлекторным приложением меняет</string>
+    <string-array name="what_for">
+        <item>зачем?</item>
+        <item>за чем вы пришли?</item>
+        <item>чего вы от него ждёте?</item>
+        <item>почему сейчас?</item>
+    </string-array>
+    <plurals name="first_after_unlock_2">
+        <item quantity="one">%1$d разблокировка из %2$d привела прямо в рефлекторное приложение</item>
+        <item quantity="few">%1$d разблокировки из %2$d привели прямо в рефлекторное приложение</item>
+        <item quantity="many">%1$d разблокировок из %2$d привели прямо в рефлекторное приложение</item>
+        <item quantity="other">%1$d разблокировки из %2$d привели прямо в рефлекторное приложение</item>
+    </plurals>
+    <plurals name="first_after_unlock_3">
+        <item quantity="one">первым после разблокировки открывалось рефлекторное приложение %1$d раз из %2$d</item>
+        <item quantity="few">первым после разблокировки открывалось рефлекторное приложение %1$d раза из %2$d</item>
+        <item quantity="many">первым после разблокировки открывалось рефлекторное приложение %1$d раз из %2$d</item>
+        <item quantity="other">первым после разблокировки открывалось рефлекторное приложение %1$d раза из %2$d</item>
+    </plurals>
+    <string name="longest_2">самое долгое пребывание: %2$s в %1$s, начиная с %3$s</string>
+    <string name="longest_3">%1$s удержало вас на %2$s подряд, с %3$s</string>
+    <string name="evening_2">вечер, после %1$s, отдал %2$s рефлекторным приложениям</string>
+    <string name="evening_3">%2$s в рефлекторных приложениях после того, как прошло %1$s</string>
+    <plurals name="checks_2">
+        <item quantity="one">%1$s открыто и закрыто меньше чем за минуту, %2$d раз</item>
+        <item quantity="few">%1$s открыто и закрыто меньше чем за минуту, %2$d раза</item>
+        <item quantity="many">%1$s открыто и закрыто меньше чем за минуту, %2$d раз</item>
+        <item quantity="other">%1$s открыто и закрыто меньше чем за минуту, %2$d раза</item>
+    </plurals>
+    <plurals name="checks_3">
+        <item quantity="one">%2$d быстрый взгляд в %1$s, меньше минуты</item>
+        <item quantity="few">%2$d быстрых взгляда в %1$s, каждый меньше минуты</item>
+        <item quantity="many">%2$d быстрых взглядов в %1$s, каждый меньше минуты</item>
+        <item quantity="other">%2$d быстрых взгляда в %1$s, каждый меньше минуты</item>
+    </plurals>
+</resources>
