@@ -11,7 +11,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import android.content.Intent
 import com.freedomfighter.readersattention.ui.AppDayScreen
+import com.freedomfighter.readersattention.ui.DeliveredScreen
+import com.freedomfighter.readersattention.ui.OPEN_SETTINGS
+import com.freedomfighter.readersattention.ui.SlotsScreen
 import com.freedomfighter.readersattention.ui.HomeScreen
 import com.freedomfighter.readersattention.ui.LocalColors
 import com.freedomfighter.readersattention.ui.Nav
@@ -29,6 +33,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
         val app = application as App
+        if (intent?.getBooleanExtra(OPEN_SETTINGS, false) == true) nav.push(Screen.Settings)
         setContent {
             val settings by app.prefs.settings.collectAsState()
             ReaderTheme(settings) {
@@ -38,9 +43,16 @@ class MainActivity : ComponentActivity() {
                     Screen.Week -> WeekScreen(nav, app)
                     is Screen.AppDay -> AppDayScreen(nav, app, s.pkg)
                     Screen.Settings -> SettingsScreen(nav, app)
+                    Screen.Slots -> SlotsScreen(nav, app)
+                    Screen.Delivered -> DeliveredScreen(nav, app)
                 }
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        if (intent.getBooleanExtra(OPEN_SETTINGS, false) && nav.current != Screen.Settings) nav.push(Screen.Settings)
     }
 
     override fun onResume() {

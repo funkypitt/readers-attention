@@ -26,12 +26,27 @@ data class Settings(
     /** The word after this many minutes in a reflex app; 0 = none. */
     val wordMinutes: Int = 0,
     /** When the evening starts, in minutes from midnight. */
-    val eveningMinutes: Int = 22 * 60
-)
+    val eveningMinutes: Int = 22 * 60,
+    /** A pause level chosen for one app, replacing [pauseLevel] for it. */
+    val pauseLevels: Map<String, Int> = emptyMap(),
+    /** Notifications held until the next delivery time. */
+    val batching: Boolean = false,
+    /** The delivery times, in minutes from midnight. */
+    val slots: List<Int> = Batch.parseSlots(Batch.DEFAULT_SLOTS),
+    /** Packages whose notifications never wait. */
+    val delivered: Set<String> = emptySet()
+) {
+    /** The level that applies to this app. */
+    fun pauseFor(pkg: String): Int = pauseLevels[pkg] ?: pauseLevel
+    /** True when some app has a pause, whether for all or for it alone. */
+    val anyPause: Boolean get() = pauseLevel != PAUSE_OFF || pauseLevels.values.any { it != PAUSE_OFF }
+}
 
 const val PAUSE_OFF = 0
 const val PAUSE_LIGHT = 1
 const val PAUSE_FIRM = 2
+/** Five guided breaths, about a minute, then the question. */
+const val PAUSE_BREATH = 3
 
 /** What the person answered to "what for?" when a reflex app was opened: a tapped reason by its [index], or the [text] typed. */
 data class Answer(val pkg: String, val t: Long, val index: Int, val text: String?)
@@ -54,8 +69,16 @@ class Prefs(context: Context) {
         tools = sp.getStringSet("tools", emptySet()) ?: emptySet(),
         pauseLevel = sp.getInt("pause_level", PAUSE_OFF),
         wordMinutes = sp.getInt("word_minutes", 0),
-        eveningMinutes = sp.getInt("evening_minutes", 22 * 60)
+        eveningMinutes = sp.getInt("evening_minutes", 22 * 60),
+        pauseLevels = parseLevels(sp.getString("pause_levels", null)),
+        batching = sp.getBoolean("batching", false),
+        slots = Batch.parseSlots(sp.getString("slots", null)),
+        delivered = sp.getStringSet("delivered", emptySet()) ?: emptySet()
     )
+    private fun parseLevels(s: String?): Map<String, Int> = (s ?: "").split(';').mapNotNull { e ->
+        val pkg = e.substringBefore('=', ""); val l = e.substringAfter('=', "").toIntOrNull()
+        if (pkg.isEmpty() || l == null) null else pkg to l
+    }.toMap()
     private inline fun <reified E : Enum<E>> enumOr(name: String?, default: E): E =
         name?.let { runCatching { enumValueOf<E>(it) }.getOrNull() } ?: default
 
@@ -67,6 +90,19 @@ class Prefs(context: Context) {
     fun setPauseLevel(v: Int) = sp.edit().putInt("pause_level", v).apply()
     fun setWordMinutes(v: Int) = sp.edit().putInt("word_minutes", v).apply()
     fun setEveningMinutes(v: Int) = sp.edit().putInt("evening_minutes", v).apply()
+    /** The pause for one app; null = as set for all. */
+    fun setPauseFor(pkg: String, level: Int?) {
+        val m = HashMap(_settings.value.pauseLevels)
+        if (level == null) m.remove(pkg) else m[pkg] = level
+        sp.edit().putString("pause_levels", m.entries.joinToString(";") { "${it.key}=${it.value}" }).apply()
+    }
+    fun setBatching(v: Boolean) = sp.edit().putBoolean("batching", v).apply()
+    fun setSlots(v: List<Int>) = sp.edit().putString("slots", Batch.formatSlots(v)).apply()
+    fun setDelivered(pkg: String, always: Boolean) {
+        val d = HashSet(_settings.value.delivered)
+        if (always) d += pkg else d -= pkg
+        sp.edit().putStringSet("delivered", d).apply()
+    }
     fun toggleTheme(systemIsDark: Boolean) {
         val dark = when (_settings.value.theme) { ThemeMode.DARK -> true; ThemeMode.LIGHT -> false; ThemeMode.SYSTEM -> systemIsDark }
         setTheme(if (dark) ThemeMode.LIGHT else ThemeMode.DARK)

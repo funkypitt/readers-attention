@@ -31,6 +31,7 @@ import com.freedomfighter.readersattention.R
 import com.freedomfighter.readersattention.StateProvider
 import com.freedomfighter.readersattention.Words
 import com.freedomfighter.readersattention.data.FontChoice
+import com.freedomfighter.readersattention.data.PAUSE_BREATH
 import com.freedomfighter.readersattention.data.PAUSE_FIRM
 import com.freedomfighter.readersattention.data.PAUSE_OFF
 import com.freedomfighter.readersattention.data.Sessions
@@ -100,8 +101,8 @@ class WatchService : AccessibilityService() {
         val pkg = event.packageName?.toString() ?: return
         if (pkg == packageName) return // our own overlays
         val cls = event.className?.toString() ?: return
-        if (!isActivity(pkg, cls)) return // dialogs, menus, keyboards: the front app has not changed
-        if (pkg == front) return
+        if (pkg == front) return // dialogs, menus and windows of the app already in front
+        if (!isActivity(pkg, cls) && !launchable(pkg)) return // the keyboard, a system dialog: the front app has not changed
         front = pkg; frontSince = System.currentTimeMillis()
         StateProvider.notifyChanged(this) // an app was left: the launcher's tile may be looked at next
         if (pausePkg != null && pausePkg != pkg) removePause()
@@ -109,12 +110,20 @@ class WatchService : AccessibilityService() {
         if (pkg in excluded) return
         val s = prefs.settings.value
         if (!prefs.isReflex(pkg, Usage.category(this, pkg))) return
-        if (s.pauseLevel != PAUSE_OFF && frontSince - (passed[pkg] ?: 0L) > PASS_MS && pause == null) showPause(pkg, s.pauseLevel == PAUSE_FIRM)
+        val level = s.pauseFor(pkg)
+        if (level != PAUSE_OFF && frontSince - (passed[pkg] ?: 0L) > PASS_MS && pause == null) showPause(pkg, level)
         if (s.wordMinutes > 0) scheduleWord(pkg, s.wordMinutes)
     }
 
     private fun isActivity(pkg: String, cls: String): Boolean =
         runCatching { packageManager.getActivityInfo(ComponentName(pkg, cls), 0); true }.getOrDefault(false)
+
+    // An app brought back from the background names a view in its first event, not its activity;
+    // a package one can open from the launcher coming to the front counts as that app.
+    private val launchableCache = HashMap<String, Boolean>()
+    private fun launchable(pkg: String): Boolean = launchableCache.getOrPut(pkg) {
+        runCatching { packageManager.getLaunchIntentForPackage(pkg) != null }.getOrDefault(false)
+    }
 
     // ---- the look, the same as the app's ----
 
@@ -150,10 +159,14 @@ class WatchService : AccessibilityService() {
 
     /**
      * Light: the reasons to tap, then "go on" after six seconds (twenty in the evening).
-     * Firm: the reason typed in a few words, and twelve seconds. The cost of the pause is what
-     * makes it work, so the level is the person's to set. "not now" is always the first row.
+     * Firm: the reason typed in a few words, and twelve seconds. Breathing: five breaths
+     * guided by a ring, about a minute, then the reasons to tap and "go on" at once. The cost
+     * of the pause is what makes it work, so the level is the person's to set, for all the
+     * reflex apps or for one. "not now" is always the first row.
      */
-    private fun showPause(pkg: String, firm: Boolean) {
+    private fun showPause(pkg: String, level: Int) {
+        val firm = level == PAUSE_FIRM
+        val breath = level == PAUSE_BREATH
         val name = Usage.name(this, pkg)
         val root = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setBackgroundColor(bg()) }
         val scroll = ScrollView(this).apply { isFillViewport = true }
@@ -164,10 +177,26 @@ class WatchService : AccessibilityService() {
         col.addView(text(name, tile * 1.3f, fg(), 6).apply { setPadding(dp(28), dp(36), dp(28), dp(2)) })
         val todayLine = text(Words.pauseToday(null, res), tile * 0.62f, dim(), 4)
         col.addView(todayLine)
-        col.addView(text(Words.whatFor(res), tile * 0.8f, dim(), 10).apply { setPadding(dp(28), dp(28), dp(28), dp(4)) })
+        // the breaths: the ring, the word of the phase and the breath's number under it
+        var ring: BreathView? = null
+        var breathWord: TextView? = null
+        var breathCount: TextView? = null
+        if (breath) {
+            val box = android.widget.FrameLayout(this)
+            ring = BreathView(this, fg(), resources.displayMetrics.density)
+            box.addView(ring, android.widget.FrameLayout.LayoutParams(dp(200), dp(200), Gravity.CENTER))
+            col.addView(box, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(220)).apply { setMargins(0, dp(12), 0, 0) })
+            breathWord = text(getString(R.string.breathe_in), tile, fg(), 4).apply { gravity = Gravity.CENTER }
+            col.addView(breathWord)
+            breathCount = text(getString(R.string.breath_n, 1, BreathView.BREATHS), tile * 0.62f, dim(), 4).apply { gravity = Gravity.CENTER }
+            col.addView(breathCount)
+        }
+        val question = text(Words.whatFor(res), tile * 0.8f, dim(), 10).apply { setPadding(dp(28), dp(28), dp(28), dp(4)) }
+        col.addView(question)
         val now = System.currentTimeMillis()
         var answered = !firm
         var typed: EditText? = null
+        val reasonRows = ArrayList<View>()
         if (firm) {
             // the reason in the person's own words; "go on" waits for a few letters
             val field = EditText(this).apply {
@@ -190,9 +219,11 @@ class WatchService : AccessibilityService() {
                     chosen = row; row.setBackgroundColor(fg()); row.setTextColor(bg())
                     prefs.recordAnswer(pkg, now, i)
                 }
-                col.addView(row)
+                col.addView(row); reasonRows += row
             }
         }
+        // while breathing, the question and the reasons wait for the end of the breaths
+        if (breath) { question.visibility = View.GONE; reasonRows.forEach { it.visibility = View.GONE } }
         // "not now" first, always; then the count, and "go on" in its place
         val notNow = text(getString(R.string.not_now), tile * 0.8f, fg(), 16)
         val count = text("", tile * 0.8f, dim(), 16)
@@ -219,12 +250,34 @@ class WatchService : AccessibilityService() {
         notNow.setOnClickListener { removePause(); performGlobalAction(GLOBAL_ACTION_HOME) }
         root.addView(rule())
         root.addView(notNow); root.addView(count); root.addView(waiting); root.addView(goOn)
-        val total = if (firm) COUNT_FIRM_S else if (evening()) COUNT_EVENING_S else COUNT_S
-        var left = total
-        val tick = object : Runnable {
-            override fun run() {
-                if (left > 0) { count.text = left.toString(); left--; handler.postDelayed(this, 1000) }
-                else { counted = true; settle() }
+        val tick: Runnable
+        if (breath) {
+            // the ring follows the clock; when the five breaths are done, the question comes and "go on" with it
+            val start = System.currentTimeMillis()
+            count.visibility = View.GONE
+            tick = object : Runnable {
+                override fun run() {
+                    val elapsed = System.currentTimeMillis() - start
+                    val at = BreathView.at(elapsed)
+                    if (at == null) {
+                        ring?.parent?.let { (it as View).visibility = View.GONE }; breathWord?.visibility = View.GONE; breathCount?.visibility = View.GONE
+                        question.visibility = View.VISIBLE; reasonRows.forEach { it.visibility = View.VISIBLE }
+                        counted = true; settle(); return
+                    }
+                    ring?.fraction = BreathView.size(elapsed)
+                    breathWord?.text = getString(when (at.second) { BreathView.PHASE_IN -> R.string.breathe_in; BreathView.PHASE_HOLD -> R.string.breathe_hold; else -> R.string.breathe_out })
+                    breathCount?.text = getString(R.string.breath_n, at.first, BreathView.BREATHS)
+                    handler.postDelayed(this, 40)
+                }
+            }
+        } else {
+            val total = if (firm) COUNT_FIRM_S else if (evening()) COUNT_EVENING_S else COUNT_S
+            var left = total
+            tick = object : Runnable {
+                override fun run() {
+                    if (left > 0) { count.text = left.toString(); left--; handler.postDelayed(this, 1000) }
+                    else { counted = true; settle() }
+                }
             }
         }
         countRunnable = tick

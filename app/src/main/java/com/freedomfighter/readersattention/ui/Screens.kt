@@ -34,9 +34,12 @@ import com.freedomfighter.readersattention.data.AppDay
 import com.freedomfighter.readersattention.data.Day
 import com.freedomfighter.readersattention.data.Ev
 import com.freedomfighter.readersattention.data.FontChoice
+import com.freedomfighter.readersattention.data.Batch
+import com.freedomfighter.readersattention.data.PAUSE_BREATH
 import com.freedomfighter.readersattention.data.PAUSE_FIRM
 import com.freedomfighter.readersattention.data.PAUSE_LIGHT
 import com.freedomfighter.readersattention.data.PAUSE_OFF
+import com.freedomfighter.readersattention.service.BatchService
 import com.freedomfighter.readersattention.data.Sessions
 import com.freedomfighter.readersattention.data.TextSize
 import com.freedomfighter.readersattention.data.Usage
@@ -50,7 +53,12 @@ sealed class Screen {
     data object Week : Screen()
     data class AppDay(val pkg: String) : Screen()
     data object Settings : Screen()
+    data object Slots : Screen()
+    data object Delivered : Screen()
 }
+
+/** Intent extra: open on the settings (the quick-settings tile, when notification access is missing). */
+const val OPEN_SETTINGS = "open_settings"
 
 class Nav {
     val stack = mutableStateListOf<Screen>(Screen.Home)
@@ -83,6 +91,17 @@ fun openUsageAccess(context: android.content.Context) =
 fun openAccessibility(context: android.content.Context) =
     context.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
 
+fun openNotificationAccess(context: android.content.Context) =
+    context.startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+
+/** The name of a pause level. */
+@Composable
+fun pauseName(level: Int): String = stringResource(when (level) {
+    PAUSE_LIGHT -> R.string.pause_light; PAUSE_FIRM -> R.string.pause_firm; PAUSE_BREATH -> R.string.pause_breath; else -> R.string.off
+})
+
+fun nextPause(level: Int): Int = when (level) { PAUSE_OFF -> PAUSE_LIGHT; PAUSE_LIGHT -> PAUSE_FIRM; PAUSE_FIRM -> PAUSE_BREATH; else -> PAUSE_OFF }
+
 // ---------------------------------------------------------------------------------------------
 // Home: today, in words.
 // ---------------------------------------------------------------------------------------------
@@ -114,6 +133,8 @@ fun HomeScreen(nav: Nav, app: App) {
                         Small(stringResource(R.string.reflex), maxLines = 1)
                         T(Words.reflexLine(today, res), size = typo.tile * 1.3f, maxLines = 2)
                         Small(Words.screenLine(today, res), Modifier.padding(top = 4.dp), maxLines = 2)
+                        // the notifications held for the next delivery time, while that is on
+                        remember(version, settings.batching, settings.slots) { BatchService.nextLine(context, settings) }?.let { Small(it, Modifier.padding(top = 4.dp), maxLines = 1) }
                     }
                     // ---- the habit, named ----
                     val sentences = Words.sentences(today, res, { Usage.name(context, it) }, settings.eveningMinutes)
@@ -131,7 +152,7 @@ fun HomeScreen(nav: Nav, app: App) {
                         if (today.tools.isEmpty()) Small(stringResource(R.string.no_tools), Modifier.padding(horizontal = rowPadH, vertical = 10.dp), maxLines = 3)
                     }
                     // the numbers alone change little: one row towards the pause, until a pause is on
-                    if (settings.pauseLevel == PAUSE_OFF) {
+                    if (!settings.anyPause) {
                         Rule()
                         T(stringResource(R.string.nudge), Modifier.fillMaxWidth().noRippleClickable { nav.push(Screen.Settings) }.padding(horizontal = rowPadH, vertical = 14.dp), size = typo.title, maxLines = 4)
                     }
@@ -148,9 +169,14 @@ fun HomeScreen(nav: Nav, app: App) {
         ))
         appMenu?.let { a ->
             val reflex = today?.reflex?.any { it.pkg == a.pkg } == true
-            TextMenu(Usage.name(context, a.pkg), listOf(
+            val own = settings.pauseLevels[a.pkg]
+            TextMenu(Usage.name(context, a.pkg), listOfNotNull(
                 MenuItem(stringResource(if (reflex) R.string.count_tool else R.string.count_reflex)) { app.prefs.setReflex(a.pkg, !reflex) },
-                MenuItem(stringResource(R.string.see_day)) { nav.push(Screen.AppDay(a.pkg)) }
+                MenuItem(stringResource(R.string.see_day)) { nav.push(Screen.AppDay(a.pkg)) },
+                // the pause for this app alone: as set for all, then each level, then back
+                if (reflex) MenuItem(if (own == null) stringResource(R.string.pause_as_all) else pauseName(own), secondary = stringResource(R.string.pause_this_app)) {
+                    app.prefs.setPauseFor(a.pkg, when (own) { null -> PAUSE_OFF; PAUSE_OFF -> PAUSE_LIGHT; PAUSE_LIGHT -> PAUSE_FIRM; PAUSE_FIRM -> PAUSE_BREATH; else -> null })
+                } else null
             ), onDismiss = { appMenu = null })
         }
     }
@@ -250,9 +276,7 @@ fun SettingsScreen(nav: Nav, app: App) {
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
                 VSpace(10.dp)
                 // ---- what the app may do, all off by default ----
-                TextRow(stringResource(when (s.pauseLevel) { PAUSE_LIGHT -> R.string.pause_light; PAUSE_FIRM -> R.string.pause_firm; else -> R.string.off }), secondary = stringResource(R.string.pause_title)) {
-                    app.prefs.setPauseLevel(when (s.pauseLevel) { PAUSE_OFF -> PAUSE_LIGHT; PAUSE_LIGHT -> PAUSE_FIRM; else -> PAUSE_OFF })
-                }
+                TextRow(pauseName(s.pauseLevel), secondary = stringResource(R.string.pause_title)) { app.prefs.setPauseLevel(nextPause(s.pauseLevel)) }
                 Small(stringResource(R.string.pause_hint), Modifier.padding(horizontal = rowPadH).padding(bottom = 10.dp), maxLines = 10)
                 TextRow(if (s.wordMinutes == 0) stringResource(R.string.off) else stringResource(R.string.word_after, s.wordMinutes), secondary = stringResource(R.string.word_title)) {
                     app.prefs.setWordMinutes(when (s.wordMinutes) { 0 -> 10; 10 -> 15; 15 -> 20; 20 -> 30; else -> 0 })
@@ -262,6 +286,18 @@ fun SettingsScreen(nav: Nav, app: App) {
                     app.prefs.setEveningMinutes(when (s.eveningMinutes) { 20 * 60 -> 21 * 60; 21 * 60 -> 22 * 60; 22 * 60 -> 23 * 60; 23 * 60 -> 0; else -> 20 * 60 })
                 }
                 Small(stringResource(R.string.evening_hint), Modifier.padding(horizontal = rowPadH).padding(bottom = 10.dp), maxLines = 6)
+                Rule(Modifier.padding(vertical = 8.dp))
+                // ---- notifications delivered together ----
+                val listener = remember(version) { BatchService.enabled(context) }
+                TextRow(stringResource(if (s.batching) R.string.on else R.string.off), secondary = stringResource(R.string.batch_title)) {
+                    if (!s.batching && !listener) openNotificationAccess(context)
+                    BatchService.set(context, !s.batching)
+                }
+                Small(stringResource(R.string.batch_hint), Modifier.padding(horizontal = rowPadH).padding(bottom = 10.dp), maxLines = 12)
+                TextRow(s.slots.joinToString(" · ") { Words.minutesWord(it) }, secondary = stringResource(R.string.slots_title)) { nav.push(Screen.Slots) }
+                TextRow(if (s.delivered.isEmpty()) stringResource(R.string.none) else s.delivered.map { Usage.name(context, it) }.sorted().joinToString(" · "), secondary = stringResource(R.string.delivered_title)) { nav.push(Screen.Delivered) }
+                TextRow(stringResource(if (listener) R.string.granted else R.string.not_granted), secondary = stringResource(R.string.notif_access)) { openNotificationAccess(context) }
+                Small(stringResource(R.string.notif_access_hint), Modifier.padding(horizontal = rowPadH).padding(bottom = 10.dp), maxLines = 8)
                 Rule(Modifier.padding(vertical = 8.dp))
                 // ---- the two permissions, each row opening its system page ----
                 TextRow(stringResource(if (usage) R.string.granted else R.string.not_granted), secondary = stringResource(R.string.usage_access)) { openUsageAccess(context) }
@@ -279,6 +315,71 @@ fun SettingsScreen(nav: Nav, app: App) {
                 Rule(Modifier.padding(vertical = 8.dp))
                 TextRow(stringResource(R.string.app_name), secondary = stringResource(R.string.about)) { }
                 TextRow(stringResource(R.string.credits)) { }
+            }
+            Box(Modifier.windowInsetsPadding(WindowInsets.navigationBars))
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------------------------
+// The delivery times: one row each, a tap to change or remove, a row to add one.
+// ---------------------------------------------------------------------------------------------
+
+@Composable
+fun SlotsScreen(nav: Nav, app: App) {
+    val s by app.prefs.settings.collectAsState()
+    val typo = LocalTypo.current
+    var editing by remember { mutableStateOf<Int?>(null) } // the slot under the menu
+    var prompt by remember { mutableStateOf<Int?>(null) } // -1 = a new one, else the slot replaced
+    BackHandler { nav.pop() }
+    Page {
+        Column(Modifier.fillMaxSize()) {
+            ScreenTitle(stringResource(R.string.slots_title), onBack = { nav.pop() })
+            Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
+                Small(stringResource(R.string.slots_hint), Modifier.padding(horizontal = rowPadH).padding(top = 14.dp, bottom = 6.dp), maxLines = 6)
+                s.slots.forEach { m -> TextRow(Words.minutesWord(m)) { editing = m } }
+                Rule()
+                TextRow(stringResource(R.string.add_time), size = typo.title) { prompt = -1 }
+            }
+            Box(Modifier.windowInsetsPadding(WindowInsets.navigationBars))
+        }
+        editing?.let { m ->
+            TextMenu(Words.minutesWord(m), listOfNotNull(
+                MenuItem(stringResource(R.string.change_time)) { prompt = m },
+                if (s.slots.size > 1) MenuItem(stringResource(R.string.remove_time)) { app.prefs.setSlots(s.slots - m) } else null
+            ), onDismiss = { editing = null })
+        }
+        prompt?.let { old ->
+            TextPrompt(stringResource(R.string.time_prompt), initial = if (old >= 0) Words.minutesWord(old) else "", selectAll = old >= 0,
+                keyboard = androidx.compose.ui.text.input.KeyboardType.Number,
+                onDone = { text ->
+                    Batch.parseTime(text)?.let { m -> app.prefs.setSlots((if (old >= 0) s.slots - old else s.slots) + m) }
+                    prompt = null
+                }, onCancel = { prompt = null })
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------------------------
+// The apps whose notifications never wait: the marked ones first, then all the others.
+// ---------------------------------------------------------------------------------------------
+
+@Composable
+fun DeliveredScreen(nav: Nav, app: App) {
+    val context = LocalContext.current
+    val s by app.prefs.settings.collectAsState()
+    val typo = LocalTypo.current
+    val all = remember { Usage.launchable(context).sortedBy { Usage.name(context, it) } }
+    BackHandler { nav.pop() }
+    Page {
+        Column(Modifier.fillMaxSize()) {
+            ScreenTitle(stringResource(R.string.delivered_title), onBack = { nav.pop() })
+            Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
+                Small(stringResource(R.string.delivered_hint), Modifier.padding(horizontal = rowPadH).padding(top = 14.dp, bottom = 6.dp), maxLines = 6)
+                val marked = all.filter { it in s.delivered }
+                marked.forEach { p -> TextRow(Usage.name(context, p), inverted = true, size = typo.title) { app.prefs.setDelivered(p, false) } }
+                if (marked.isNotEmpty()) Rule()
+                all.filter { it !in s.delivered }.forEach { p -> TextRow(Usage.name(context, p), size = typo.title) { app.prefs.setDelivered(p, true) } }
             }
             Box(Modifier.windowInsetsPadding(WindowInsets.navigationBars))
         }

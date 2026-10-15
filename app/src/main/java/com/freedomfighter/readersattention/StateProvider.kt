@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Binder
 import android.os.Process
 import com.freedomfighter.readersattention.data.Usage
+import com.freedomfighter.readersattention.service.BatchService
 
 /**
  * Today for Reader's Launcher's tile (`content://…/today`, one row): whether usage access is
@@ -60,7 +61,7 @@ class StateProvider : ContentProvider() {
                 cursor.addRow(arrayOf<Any>(
                     1, day.reflexOpenings, day.reflexMillis, day.toolsMillis,
                     ctx.getString(R.string.widget_reflex, day.reflexOpenings, Words.duration(day.reflexMillis, res)),
-                    ctx.getString(R.string.widget_tools, Words.duration(day.toolsMillis, res))
+                    BatchService.nextLine(ctx, app.prefs.settings.value).let { n -> ctx.getString(R.string.widget_tools, Words.duration(day.toolsMillis, res)).let { if (n == null) it else ctx.getString(R.string.pair, it, n) } }
                 ))
             }
         } finally { Binder.restoreCallingIdentity(id) }

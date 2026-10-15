@@ -16,6 +16,7 @@ import com.freedomfighter.readersattention.R
 import com.freedomfighter.readersattention.StateProvider
 import com.freedomfighter.readersattention.Words
 import com.freedomfighter.readersattention.data.Usage
+import com.freedomfighter.readersattention.service.BatchService
 import kotlin.concurrent.thread
 
 /**
@@ -39,7 +40,7 @@ object AttentionWidget {
         val (events, bounds) = App.events(context, 1)
         val day = App.days(context, events, bounds, app.prefs.settings.value).first()
         return context.getString(R.string.widget_reflex, day.reflexOpenings, Words.duration(day.reflexMillis, res)) to
-            context.getString(R.string.widget_tools, Words.duration(day.toolsMillis, res))
+            BatchService.nextLine(context, app.prefs.settings.value).let { n -> context.getString(R.string.widget_tools, Words.duration(day.toolsMillis, res)).let { if (n == null) it else context.getString(R.string.pair, it, n) } }
     }
 
     fun render(context: Context, mgr: AppWidgetManager, ids: IntArray, lines: Pair<String, String>) {

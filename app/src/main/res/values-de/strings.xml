@@ -55,7 +55,7 @@
     <string name="not_granted">nicht erteilt</string>
 
     <string name="pause_title">eine Pause vor einer Reflex-App</string>
-    <string name="pause_hint">Wenn eine Reflex-App in den Vordergrund kommt: ihr Name, die Zahl des Tages und eine Frage. Leicht: ein Grund zum Antippen, dann „weiter“ nach sechs Sekunden. Fest: der Grund in ein paar Worten getippt, und zwölf Sekunden. Abends länger. Weiter geht es immer. Braucht den Bedienungshilfen-Dienst unten.</string>
+    <string name="pause_hint">Wenn eine Reflex-App in den Vordergrund kommt: ihr Name, die Zahl von heute und eine Frage. Leicht: ein Grund zum Antippen, dann „weiter“ nach sechs Sekunden. Fest: der Grund in ein paar Worten getippt, und zwölf Sekunden. Atmen: fünf Atemzüge, von einem Ring geführt, etwa eine Minute, dann die Frage. Abends länger. Weiter geht es immer. Über die Zeile einer App auf der ersten Seite lässt sich die Pause für diese App allein einstellen. Braucht den Bedienungshilfen-Dienst unten.</string>
     <string name="word_title">ein Wort nach einer Weile</string>
     <string name="word_after">nach %1$d Minuten</string>
     <string name="word_hint">Eine Zeile oben am Bildschirm, ein paar Sekunden lang, wenn eine Reflex-App so lange im Vordergrund geblieben ist. Braucht den Bedienungshilfen-Dienst unten.</string>
@@ -128,4 +128,28 @@
         <item quantity="one">ein kurzer Blick in %1$s, unter einer Minute</item>
         <item quantity="other">%2$d kurze Blicke in %1$s, jeder unter einer Minute</item>
     </plurals>
+
+    <!-- the breathing pause, the pause for one app, the notifications delivered together -->
+    <string name="pause_breath">atmen</string>
+    <string name="pause_as_all">wie für alle</string>
+    <string name="pause_this_app">die Pause vor dieser App</string>
+    <string name="none">keine</string>
+    <string name="breathe_in">einatmen</string>
+    <string name="breathe_hold">halten</string>
+    <string name="breathe_out">ausatmen</string>
+    <string name="breath_n">Atemzug %1$d von %2$d</string>
+    <string name="batch_title">Benachrichtigungen gesammelt zugestellt</string>
+    <string name="batch_hint">Eine Benachrichtigung, die zwischen zwei Zustellzeiten eintrifft, wartet; dann kommen alle auf einmal. Dreimal am Tag reicht, um nichts zu verpassen, und ist selten genug, um nicht mehr hinzusehen. Anrufe, Wecker, Erinnerungen, Navigation, Laufendes und die unten markierten Apps kommen immer sofort. Nichts wird blockiert, nur später zugestellt; was schon wartet, kommt zu seiner Zeit. Braucht den Benachrichtigungszugriff unten.</string>
+    <string name="slots_title">Zustellzeiten</string>
+    <string name="slots_hint">Eine Benachrichtigung, die zwischen zwei dieser Zeiten eintrifft, wartet auf die nächste. Antippen ändert oder entfernt eine Zeit.</string>
+    <string name="add_time">Zeit hinzufügen</string>
+    <string name="time_prompt">eine Uhrzeit, etwa 13:00</string>
+    <string name="change_time">ändern</string>
+    <string name="remove_time">entfernen</string>
+    <string name="delivered_title">immer sofort zugestellt</string>
+    <string name="delivered_hint">Die Apps, deren Benachrichtigungen nie warten, zu jeder Zeit. Die markierten kommen zuerst; Antippen markiert oder hebt die Markierung auf.</string>
+    <string name="notif_access">Benachrichtigungszugriff</string>
+    <string name="notif_access_hint">Die Systemseite, auf der diese App Benachrichtigungen sehen darf, um sie bis zur nächsten Zustellzeit zurückzuhalten. Sie sieht nur die App und die Art jeder Benachrichtigung, liest keinen Inhalt und entfernt keine.</string>
+    <string name="next_delivery">Benachrichtigungen um %1$s</string>
+    <string name="tile_batch">Benachrichtigungen</string>
 </resources>

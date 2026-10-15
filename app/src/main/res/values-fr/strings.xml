@@ -55,7 +55,7 @@
     <string name="not_granted">pas accordé</string>
 
     <string name="pause_title">une pause avant une appli réflexe</string>
-    <string name="pause_hint">Quand une appli réflexe passe au premier plan : son nom, le compte du jour, et une question. Légère : une raison à toucher, puis « continuer » après six secondes. Ferme : la raison tapée en quelques mots, et douze secondes. Plus long le soir. On peut toujours continuer. Demande le service d’accessibilité ci-dessous.</string>
+    <string name="pause_hint">Quand une appli réflexe passe au premier plan : son nom, le compte du jour, et une question. Légère : une raison à toucher, puis « continuer » après six secondes. Ferme : la raison tapée en quelques mots, et douze secondes. Respiration : cinq respirations guidées par un anneau, environ une minute, puis la question. Plus long le soir. On peut toujours continuer. Depuis la ligne d’une appli sur la première page, la pause se règle pour cette appli seule. Demande le service d’accessibilité ci-dessous.</string>
     <string name="word_title">un mot après un moment</string>
     <string name="word_after">après %1$d minutes</string>
     <string name="word_hint">Une ligne en haut de l’écran, quelques secondes, quand une appli réflexe est restée au premier plan tout ce temps. Demande le service d’accessibilité ci-dessous.</string>
@@ -128,4 +128,28 @@
         <item quantity="one">un coup d’œil à %1$s, moins d’une minute</item>
         <item quantity="other">%2$d coups d’œil à %1$s, chacun de moins d’une minute</item>
     </plurals>
+
+    <!-- the breathing pause, the pause for one app, the notifications delivered together -->
+    <string name="pause_breath">respiration</string>
+    <string name="pause_as_all">comme pour toutes</string>
+    <string name="pause_this_app">la pause avant cette appli</string>
+    <string name="none">aucune</string>
+    <string name="breathe_in">inspirer</string>
+    <string name="breathe_hold">retenir</string>
+    <string name="breathe_out">expirer</string>
+    <string name="breath_n">respiration %1$d sur %2$d</string>
+    <string name="batch_title">notifications remises ensemble</string>
+    <string name="batch_hint">Une notification qui arrive entre deux heures de remise attend, puis toutes arrivent d’un coup. Trois fois par jour suffit pour ne rien manquer, et c’est assez peu pour cesser de regarder. Les appels, alarmes, rappels, le guidage, ce qui est en cours et les applis marquées ci-dessous arrivent toujours tout de suite. Rien n’est bloqué, seulement remis plus tard ; ce qui attend déjà arrive à son heure. Demande l’accès aux notifications ci-dessous.</string>
+    <string name="slots_title">heures de remise</string>
+    <string name="slots_hint">Une notification qui arrive entre deux de ces heures attend la suivante. Un toucher change ou retire une heure.</string>
+    <string name="add_time">ajouter une heure</string>
+    <string name="time_prompt">une heure, par exemple 13:00</string>
+    <string name="change_time">changer</string>
+    <string name="remove_time">retirer</string>
+    <string name="delivered_title">toujours remises tout de suite</string>
+    <string name="delivered_hint">Les applis dont les notifications n’attendent jamais, quelle que soit l’heure. Les marquées viennent d’abord ; un toucher marque ou démarque.</string>
+    <string name="notif_access">accès aux notifications</string>
+    <string name="notif_access_hint">La page du système où cette appli est autorisée à voir les notifications, pour les retenir jusqu’à la prochaine heure de remise. Elle ne regarde que l’appli et le genre de chacune, ne lit aucun contenu et n’en retire aucune.</string>
+    <string name="next_delivery">notifications à %1$s</string>
+    <string name="tile_batch">notifications</string>
 </resources>

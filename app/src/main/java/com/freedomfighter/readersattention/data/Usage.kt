@@ -78,6 +78,12 @@ object Usage {
         return out
     }
 
+    /** The apps one can open from a launcher, this one left out. */
+    fun launchable(context: Context): List<String> = runCatching {
+        context.packageManager.queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER), 0)
+            .map { it.activityInfo.packageName }.distinct().filter { it != context.packageName }
+    }.getOrDefault(emptyList())
+
     private val names = HashMap<String, String>()
     private val categories = HashMap<String, Int>()
 

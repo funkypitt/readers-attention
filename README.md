@@ -20,9 +20,20 @@ the [Reader's](https://github.com/funkypitt/readers-launcher) apps: text only, w
   **a pause before a reflex app**: the app's name, today's count, "what for?", and "go on" after
   a count. Light: four reasons to tap and six seconds (twenty in the evening). Firm: the reason
   typed in a few words and twelve seconds, because the pause works in proportion to what it
-  costs. The reason stays with the opening, so you see the gap between it and what followed.
+  costs. Breathing: five breaths guided by a ring (3 s in, 3 s hold, 6 s out, about a minute),
+  then the question. The level can be set for one app alone, so the longest pause lands only on
+  the worst app. The reason stays with the opening, so you see the gap between it and what followed.
+  An app brought back from the background is seen as well as one started cold (1.2.0).
   **A word after a while**: one line at the top of the screen, "20 minutes in instagram", for a
   few seconds. Both need the accessibility service, which hears only which app comes to the front.
+* **Notifications delivered together**, off until you turn it on: a notification that arrives
+  between two delivery times (09:00, 13:00 and 18:00 by default, yours to change) waits, then
+  they all come at once. Calls, alarms, reminders, navigation, what is in progress, the dialer
+  and the apps you mark always come at once; nothing is blocked, only delivered later. A tile in
+  the quick settings switches it, the first page and the widget say when the next delivery is.
+  Needs notification access; the app looks only at the app and the kind of each notification.
+  (Batching three times a day was the condition that beat both constant notifications and none
+  in Fitz et al., 2019.)
 * The question and the sentences each have a few phrasings and change with the day, so they keep
   being read; there are never more of them than this.
 * A home-screen widget: "reflex 23 · 1 h 12" and "tools 2 h 28". The same two lines as a tile

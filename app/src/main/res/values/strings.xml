@@ -61,7 +61,7 @@
 
     <!-- interventions -->
     <string name="pause_title">a pause before a reflex app</string>
-    <string name="pause_hint">When a reflex app comes to the front: its name, today’s count, and a question. Light: a reason to tap, then “go on” after six seconds. Firm: the reason typed in a few words, and twelve seconds. Longer in the evening. You can always go on. Needs the accessibility service below.</string>
+    <string name="pause_hint">When a reflex app comes to the front: its name, today’s count, and a question. Light: a reason to tap, then “go on” after six seconds. Firm: the reason typed in a few words, and twelve seconds. Breathing: five breaths guided by a ring, about a minute, then the question. Longer in the evening. You can always go on. From an app’s row on the first page, the pause can be set for that app alone. Needs the accessibility service below.</string>
     <string name="word_title">a word after a while</string>
     <string name="word_after">after %1$d minutes</string>
     <string name="word_hint">One line at the top of the screen, for a few seconds, when a reflex app has stayed in front that long. Needs the accessibility service below.</string>
@@ -136,4 +136,28 @@
         <item quantity="one">one quick look at %1$s, under a minute</item>
         <item quantity="other">%2$d quick looks at %1$s, each under a minute</item>
     </plurals>
+
+    <!-- the breathing pause, the pause for one app, the notifications delivered together -->
+    <string name="pause_breath">breathing</string>
+    <string name="pause_as_all">as for all</string>
+    <string name="pause_this_app">the pause before this app</string>
+    <string name="none">none</string>
+    <string name="breathe_in">breathe in</string>
+    <string name="breathe_hold">hold</string>
+    <string name="breathe_out">breathe out</string>
+    <string name="breath_n">breath %1$d of %2$d</string>
+    <string name="batch_title">notifications delivered together</string>
+    <string name="batch_hint">A notification that arrives between two delivery times waits, then they all come at once. Three times a day is enough to miss nothing and few enough to stop looking. Calls, alarms, reminders, navigation, what is in progress, and the apps marked below always come at once. Nothing is blocked, only delivered later; what is already waiting still comes at its time. Needs notification access below.</string>
+    <string name="slots_title">delivery times</string>
+    <string name="slots_hint">A notification that arrives between two of these times waits for the next one. A tap changes or removes a time.</string>
+    <string name="add_time">add a time</string>
+    <string name="time_prompt">a time, such as 13:00</string>
+    <string name="change_time">change</string>
+    <string name="remove_time">remove</string>
+    <string name="delivered_title">always delivered at once</string>
+    <string name="delivered_hint">The apps whose notifications never wait, whatever the time. The marked ones come first; a tap marks or unmarks.</string>
+    <string name="notif_access">notification access</string>
+    <string name="notif_access_hint">The system page where this app is allowed to see notifications, so it can hold them until the next delivery time. It looks only at the app and the kind of each one, reads no content, and removes none.</string>
+    <string name="next_delivery">notifications at %1$s</string>
+    <string name="tile_batch">notifications</string>
 </resources>
