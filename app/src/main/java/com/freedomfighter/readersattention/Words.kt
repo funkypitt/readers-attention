@@ -4,6 +4,7 @@ import android.content.Context
 import com.freedomfighter.readersattention.data.AppDay
 import com.freedomfighter.readersattention.data.Day
 import com.freedomfighter.readersattention.data.Session
+import com.freedomfighter.readersattention.data.ThemeMode
 import com.freedomfighter.readersattention.data.WeekAverage
 import java.time.Instant
 import java.time.LocalDate
@@ -112,6 +113,14 @@ object Words {
 
     /** "20 minutes in instagram" */
     fun minutesIn(minutes: Int, appName: String, r: Res) = r.s(R.string.minutes_in, minutes, appName)
+
+    /** The name of a theme, as the settings row and the menu show it. */
+    fun themeName(m: ThemeMode, r: Res): String = r.s(when (m) {
+        ThemeMode.DARK -> R.string.theme_dark; ThemeMode.LIGHT -> R.string.theme_light; ThemeMode.SYSTEM -> R.string.theme_system
+        ThemeMode.LAVANDE -> R.string.theme_lavande; ThemeMode.SAUGE -> R.string.theme_sauge; ThemeMode.NORDIQUE -> R.string.theme_nordique
+        ThemeMode.TERRACOTTA -> R.string.theme_terracotta; ThemeMode.COQUETTE -> R.string.theme_coquette; ThemeMode.MILITANTE -> R.string.theme_militante
+        ThemeMode.TORRIDE -> R.string.theme_torride; ThemeMode.NATURE -> R.string.theme_nature
+    })
 
     val answerIds = listOf(R.string.answer_1, R.string.answer_2, R.string.answer_3, R.string.answer_4)
 }

@@ -11,11 +11,13 @@ import android.os.Binder
 import android.os.Process
 import com.freedomfighter.readersattention.data.Usage
 import com.freedomfighter.readersattention.service.BatchService
+import com.freedomfighter.readersattention.widget.AttentionWidget
 
 /**
  * Today for Reader's Launcher's tile (`content://…/today`, one row): whether usage access is
  * given, the reflex openings and time, the tools' time, and the two lines already in words,
- * in this app's language. Open to Reader's Launcher only, recognised by its signature; the
+ * in this app's language, and the colours of the app's theme (`bg`, `fg`, ARGB) for a tile
+ * painted like the app. Open to Reader's Launcher only, recognised by its signature; the
  * launcher is told when the app has shown a new day ([notifyChanged]).
  */
 class StateProvider : ContentProvider() {
@@ -48,12 +50,13 @@ class StateProvider : ContentProvider() {
     override fun query(uri: Uri, projection: Array<String>?, selection: String?, selectionArgs: Array<String>?, sortOrder: String?): Cursor? {
         val ctx = context ?: return null
         if (!trusted()) throw SecurityException("not Reader's Launcher")
-        val cursor = MatrixCursor(arrayOf("allowed", "reflex_openings", "reflex_ms", "tools_ms", "line1", "line2"))
+        val cursor = MatrixCursor(arrayOf("allowed", "reflex_openings", "reflex_ms", "tools_ms", "line1", "line2", "bg", "fg"))
         val id = Binder.clearCallingIdentity()
         try {
             val res = AndroidRes(ctx)
+            val (bg, fg, _) = AttentionWidget.colors(ctx)
             if (!Usage.allowed(ctx)) {
-                cursor.addRow(arrayOf<Any>(0, 0, 0L, 0L, ctx.getString(R.string.app_title), ctx.getString(R.string.allow_usage)))
+                cursor.addRow(arrayOf<Any>(0, 0, 0L, 0L, ctx.getString(R.string.app_title), ctx.getString(R.string.allow_usage), bg, fg))
             } else {
                 val app = ctx.applicationContext as App
                 val (events, bounds) = App.events(ctx, 1)
@@ -61,7 +64,8 @@ class StateProvider : ContentProvider() {
                 cursor.addRow(arrayOf<Any>(
                     1, day.reflexOpenings, day.reflexMillis, day.toolsMillis,
                     ctx.getString(R.string.widget_reflex, day.reflexOpenings, Words.duration(day.reflexMillis, res)),
-                    BatchService.nextLine(ctx, app.prefs.settings.value).let { n -> ctx.getString(R.string.widget_tools, Words.duration(day.toolsMillis, res)).let { if (n == null) it else ctx.getString(R.string.pair, it, n) } }
+                    BatchService.nextLine(ctx, app.prefs.settings.value).let { n -> ctx.getString(R.string.widget_tools, Words.duration(day.toolsMillis, res)).let { if (n == null) it else ctx.getString(R.string.pair, it, n) } },
+                    bg, fg
                 ))
             }
         } finally { Binder.restoreCallingIdentity(id) }

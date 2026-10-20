@@ -83,6 +83,15 @@
     <string name="settings">Einstellungen</string>
     <string name="theme_dark">weiß auf schwarz</string>
     <string name="theme_light">schwarz auf weiß</string>
+    <string name="theme_system">wie das Telefon</string>
+    <string name="theme_lavande">Lavendel</string>
+    <string name="theme_sauge">Salbei</string>
+    <string name="theme_nordique">nordisch</string>
+    <string name="theme_terracotta">Terrakotta</string>
+    <string name="theme_coquette">kokett</string>
+    <string name="theme_militante">kämpferisch</string>
+    <string name="theme_torride">glühend</string>
+    <string name="theme_nature">Natur</string>
     <string name="colours">Farben</string>
     <string name="text_size">Textgröße</string>
     <string name="font">Schrift</string>

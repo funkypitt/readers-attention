@@ -34,9 +34,9 @@ import com.freedomfighter.readersattention.data.FontChoice
 import com.freedomfighter.readersattention.data.PAUSE_BREATH
 import com.freedomfighter.readersattention.data.PAUSE_FIRM
 import com.freedomfighter.readersattention.data.PAUSE_OFF
+import com.freedomfighter.readersattention.data.Palettes
 import com.freedomfighter.readersattention.data.Sessions
 import com.freedomfighter.readersattention.data.TextSize
-import com.freedomfighter.readersattention.data.ThemeMode
 import com.freedomfighter.readersattention.data.Usage
 import java.time.LocalTime
 import kotlin.concurrent.thread
@@ -127,14 +127,13 @@ class WatchService : AccessibilityService() {
 
     // ---- the look, the same as the app's ----
 
-    private fun dark(): Boolean = when (prefs.settings.value.theme) {
-        ThemeMode.DARK -> true
-        ThemeMode.LIGHT -> false
-        ThemeMode.SYSTEM -> (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-    }
-    private fun bg() = if (dark()) Color.BLACK else Color.WHITE
-    private fun fg() = if (dark()) Color.WHITE else Color.BLACK
-    private fun dim() = if (dark()) Color.argb(140, 255, 255, 255) else Color.argb(140, 0, 0, 0)
+    private fun palette() = Palettes.of(prefs.settings.value.theme, (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES)
+    private fun bg() = palette().bg.toInt()
+    private fun fg() = palette().fg.toInt()
+    private fun dim() = fg().let { Color.argb(140, Color.red(it), Color.green(it), Color.blue(it)) }
+    /** The accent fills the chosen reason and "go on"; the text colour itself in the two inks. */
+    private fun accent() = palette().accent.toInt()
+    private fun onAccent() = palette().onAccent.toInt()
     private fun tileSp() = when (prefs.settings.value.textSize) { TextSize.SMALL -> 24f; TextSize.MEDIUM -> 28f; TextSize.LARGE -> 32f }
     private fun face(): Typeface = when (prefs.settings.value.font) {
         FontChoice.SANS -> Typeface.create("sans-serif-light", Typeface.NORMAL)
@@ -162,7 +161,8 @@ class WatchService : AccessibilityService() {
      * Firm: the reason typed in a few words, and twelve seconds. Breathing: five breaths
      * guided by a ring, about a minute, then the reasons to tap and "go on" at once. The cost
      * of the pause is what makes it work, so the level is the person's to set, for all the
-     * reflex apps or for one. "not now" is always the first row.
+     * reflex apps or for one. "not now" is always the first row; "go on" is filled with the
+     * theme's accent, and so is the reason tapped.
      */
     private fun showPause(pkg: String, level: Int) {
         val firm = level == PAUSE_FIRM
@@ -216,7 +216,7 @@ class WatchService : AccessibilityService() {
                 val row = text(getString(id), tile, fg(), 12)
                 row.setOnClickListener {
                     chosen?.let { it.setBackgroundColor(Color.TRANSPARENT); it.setTextColor(fg()) }
-                    chosen = row; row.setBackgroundColor(fg()); row.setTextColor(bg())
+                    chosen = row; row.setBackgroundColor(accent()); row.setTextColor(onAccent())
                     prefs.recordAnswer(pkg, now, i)
                 }
                 col.addView(row); reasonRows += row
@@ -227,7 +227,7 @@ class WatchService : AccessibilityService() {
         // "not now" first, always; then the count, and "go on" in its place
         val notNow = text(getString(R.string.not_now), tile * 0.8f, fg(), 16)
         val count = text("", tile * 0.8f, dim(), 16)
-        val goOn = text(getString(R.string.go_on), tile * 0.8f, fg(), 16).apply { visibility = View.GONE }
+        val goOn = text(getString(R.string.go_on), tile * 0.8f, onAccent(), 16).apply { setBackgroundColor(accent()); visibility = View.GONE }
         val waiting = text(getString(R.string.type_first), tile * 0.62f, dim(), 16).apply { visibility = View.GONE }
         var counted = false
         fun settle() {

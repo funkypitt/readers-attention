@@ -39,6 +39,7 @@ import com.freedomfighter.readersattention.data.PAUSE_BREATH
 import com.freedomfighter.readersattention.data.PAUSE_FIRM
 import com.freedomfighter.readersattention.data.PAUSE_LIGHT
 import com.freedomfighter.readersattention.data.PAUSE_OFF
+import com.freedomfighter.readersattention.data.Palettes
 import com.freedomfighter.readersattention.service.BatchService
 import com.freedomfighter.readersattention.data.Sessions
 import com.freedomfighter.readersattention.data.TextSize
@@ -109,7 +110,6 @@ fun nextPause(level: Int): Int = when (level) { PAUSE_OFF -> PAUSE_LIGHT; PAUSE_
 @Composable
 fun HomeScreen(nav: Nav, app: App) {
     val context = LocalContext.current
-    val colors = LocalColors.current
     val typo = LocalTypo.current
     val tick = rememberTick()
     val res = rememberRes()
@@ -164,7 +164,7 @@ fun HomeScreen(nav: Nav, app: App) {
         if (menu) TextMenu(null, listOf(
             MenuItem(stringResource(R.string.week)) { nav.push(Screen.Week) }
         ), onDismiss = { menu = false }, footer = listOf(
-            MenuItem(if (colors.isDark) stringResource(R.string.theme_light) else stringResource(R.string.theme_dark)) { app.prefs.toggleTheme(colors.isDark) },
+            MenuItem(Words.themeName(Palettes.next(settings.theme), res)) { app.prefs.nextTheme() },
             MenuItem(stringResource(R.string.settings)) { nav.push(Screen.Settings) }
         ))
         appMenu?.let { a ->
@@ -263,9 +263,9 @@ fun AppDayScreen(nav: Nav, app: App, pkg: String) {
 @Composable
 fun SettingsScreen(nav: Nav, app: App) {
     val context = LocalContext.current
+    val res = rememberRes()
     val s by app.prefs.settings.collectAsState()
     val version by app.version.collectAsState()
-    val colors = LocalColors.current
     val typo = LocalTypo.current
     val usage = remember(version) { Usage.allowed(context) }
     val access = remember(version) { WatchService.enabled(context) }
@@ -304,7 +304,7 @@ fun SettingsScreen(nav: Nav, app: App) {
                 TextRow(stringResource(if (access) R.string.on else R.string.off), secondary = stringResource(R.string.accessibility)) { openAccessibility(context) }
                 Small(stringResource(R.string.accessibility_hint), Modifier.padding(horizontal = rowPadH).padding(bottom = 10.dp), maxLines = 6)
                 Rule(Modifier.padding(vertical = 8.dp))
-                TextRow(if (colors.isDark) stringResource(R.string.theme_dark) else stringResource(R.string.theme_light), secondary = stringResource(R.string.colours)) { app.prefs.toggleTheme(colors.isDark) }
+                TextRow(Words.themeName(s.theme, res), secondary = stringResource(R.string.colours)) { app.prefs.nextTheme() }
                 TextRow(when (s.textSize) { TextSize.SMALL -> stringResource(R.string.size_small); TextSize.MEDIUM -> stringResource(R.string.size_medium); TextSize.LARGE -> stringResource(R.string.size_large) }, secondary = stringResource(R.string.text_size)) {
                     app.prefs.setTextSize(when (s.textSize) { TextSize.SMALL -> TextSize.MEDIUM; TextSize.MEDIUM -> TextSize.LARGE; TextSize.LARGE -> TextSize.SMALL })
                 }

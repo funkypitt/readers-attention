@@ -15,6 +15,7 @@ import com.freedomfighter.readersattention.MainActivity
 import com.freedomfighter.readersattention.R
 import com.freedomfighter.readersattention.StateProvider
 import com.freedomfighter.readersattention.Words
+import com.freedomfighter.readersattention.data.Palettes
 import com.freedomfighter.readersattention.data.Usage
 import com.freedomfighter.readersattention.service.BatchService
 import kotlin.concurrent.thread
@@ -24,12 +25,13 @@ import kotlin.concurrent.thread
  * A tap opens the app. Refreshed when the app is left and every half hour by the system.
  */
 object AttentionWidget {
-    private fun colors(context: Context): Triple<Int, Int, Int> {
-        val theme = context.getSharedPreferences("settings", Context.MODE_PRIVATE).getString("theme", "DARK")
+    /** The app's theme, read from the same setting: background, text, text dimmed. */
+    fun colors(context: Context): Triple<Int, Int, Int> {
+        val theme = Palettes.parse(context.getSharedPreferences("settings", Context.MODE_PRIVATE).getString("theme", null))
         val systemDark = (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-        val dark = when (theme) { "LIGHT" -> false; "SYSTEM" -> systemDark; else -> true }
-        return if (dark) Triple(Color.BLACK, Color.WHITE, Color.argb(140, 255, 255, 255))
-        else Triple(Color.WHITE, Color.BLACK, Color.argb(140, 0, 0, 0))
+        val p = Palettes.of(theme, systemDark)
+        val fg = p.fg.toInt()
+        return Triple(p.bg.toInt(), fg, Color.argb(140, Color.red(fg), Color.green(fg), Color.blue(fg)))
     }
 
     /** The two lines; computed off the main thread by [refresh]. */
