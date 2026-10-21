@@ -10,6 +10,9 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.StateListDrawable
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
@@ -134,6 +137,10 @@ class WatchService : AccessibilityService() {
     /** The accent fills the chosen reason and "go on"; the text colour itself in the two inks. */
     private fun accent() = palette().accent.toInt()
     private fun onAccent() = palette().onAccent.toInt()
+    /** A colour palette brings cards: the tappable rows sit on `tile`, `press` under the finger; the inks have none. */
+    private fun tiles() = palette().tiles
+    private fun tile() = palette().tile.toInt()
+    private fun press() = palette().press.toInt()
     private fun tileSp() = when (prefs.settings.value.textSize) { TextSize.SMALL -> 24f; TextSize.MEDIUM -> 28f; TextSize.LARGE -> 32f }
     private fun face(): Typeface = when (prefs.settings.value.font) {
         FontChoice.SANS -> Typeface.create("sans-serif-light", Typeface.NORMAL)
@@ -141,6 +148,27 @@ class WatchService : AccessibilityService() {
         FontChoice.MONO -> Typeface.MONOSPACE
     }
     private fun dp(v: Int) = (v * resources.displayMetrics.density).toInt()
+
+    /** A rounded card in [color], [pressed] while the finger is on it (the app's tileCorner, 18 dp). */
+    private fun card(color: Int, pressed: Int = color): Drawable {
+        fun round(c: Int) = GradientDrawable().apply { cornerRadius = dp(18).toFloat(); setColor(c) }
+        return StateListDrawable().apply {
+            addState(intArrayOf(android.R.attr.state_pressed), round(pressed))
+            addState(intArrayOf(), round(color))
+        }
+    }
+
+    /**
+     * A row one can tap: flat text in the inks, a card with a colour palette, set apart by its
+     * margin (the app's tileGap, 12 dp) and keeping the text at the page's inset of 28 dp.
+     */
+    private fun <V : View> tappable(v: V, color: Int = tile(), pressed: Int = press()): V {
+        if (!tiles()) return v
+        v.background = card(color, pressed)
+        v.setPadding(dp(28 - 12), v.paddingTop, dp(28 - 12), v.paddingBottom)
+        v.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(dp(12), dp(4), dp(12), dp(4)) }
+        return v
+    }
 
     private fun text(s: String, sp: Float, color: Int, padV: Int = 14): TextView = TextView(this).apply {
         text = s; typeface = face(); setTextColor(color)
@@ -213,10 +241,11 @@ class WatchService : AccessibilityService() {
         } else {
             var chosen: TextView? = null
             Words.answerIds.forEachIndexed { i, id ->
-                val row = text(getString(id), tile, fg(), 12)
+                val row = tappable(text(getString(id), tile, fg(), 12))
                 row.setOnClickListener {
-                    chosen?.let { it.setBackgroundColor(Color.TRANSPARENT); it.setTextColor(fg()) }
-                    chosen = row; row.setBackgroundColor(accent()); row.setTextColor(onAccent())
+                    // the reason tapped takes the accent, the one before goes back to its rest
+                    chosen?.let { if (tiles()) it.background = card(tile(), press()) else it.setBackgroundColor(Color.TRANSPARENT); it.setTextColor(fg()) }
+                    chosen = row; if (tiles()) row.background = card(accent()) else row.setBackgroundColor(accent()); row.setTextColor(onAccent())
                     prefs.recordAnswer(pkg, now, i)
                 }
                 col.addView(row); reasonRows += row
@@ -225,9 +254,10 @@ class WatchService : AccessibilityService() {
         // while breathing, the question and the reasons wait for the end of the breaths
         if (breath) { question.visibility = View.GONE; reasonRows.forEach { it.visibility = View.GONE } }
         // "not now" first, always; then the count, and "go on" in its place
-        val notNow = text(getString(R.string.not_now), tile * 0.8f, fg(), 16)
+        val notNow = tappable(text(getString(R.string.not_now), tile * 0.8f, fg(), 16))
         val count = text("", tile * 0.8f, dim(), 16)
-        val goOn = text(getString(R.string.go_on), tile * 0.8f, onAccent(), 16).apply { setBackgroundColor(accent()); visibility = View.GONE }
+        // "go on" keeps the accent fill, a rounded card with a colour theme
+        val goOn = text(getString(R.string.go_on), tile * 0.8f, onAccent(), 16).apply { if (tiles()) tappable(this, accent(), accent()) else setBackgroundColor(accent()); visibility = View.GONE }
         val waiting = text(getString(R.string.type_first), tile * 0.62f, dim(), 16).apply { visibility = View.GONE }
         var counted = false
         fun settle() {
@@ -248,7 +278,8 @@ class WatchService : AccessibilityService() {
             passed[pkg] = System.currentTimeMillis(); removePause()
         }
         notNow.setOnClickListener { removePause(); performGlobalAction(GLOBAL_ACTION_HOME) }
-        root.addView(rule())
+        // the rows at the foot: set apart by a rule in the inks, by space with a colour theme
+        if (tiles()) root.addView(View(this), LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(4))) else root.addView(rule())
         root.addView(notNow); root.addView(count); root.addView(waiting); root.addView(goOn)
         val tick: Runnable
         if (breath) {

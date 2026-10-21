@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.freedomfighter.readersattention.AndroidRes
 import com.freedomfighter.readersattention.App
@@ -103,6 +104,11 @@ fun pauseName(level: Int): String = stringResource(when (level) {
 
 fun nextPause(level: Int): Int = when (level) { PAUSE_OFF -> PAUSE_LIGHT; PAUSE_LIGHT -> PAUSE_FIRM; PAUSE_FIRM -> PAUSE_BREATH; else -> PAUSE_OFF }
 
+/** A line that only reads (a day of the week, one opening): the look of a row, on the surface, never a card. */
+@Composable
+fun ReadRow(text: String, size: TextUnit = LocalTypo.current.title) =
+    T(text, Modifier.fillMaxWidth().padding(horizontal = rowPadH, vertical = rowPadV * 0.7f), size = size, maxLines = 1)
+
 // ---------------------------------------------------------------------------------------------
 // Home: today, in words.
 // ---------------------------------------------------------------------------------------------
@@ -154,7 +160,8 @@ fun HomeScreen(nav: Nav, app: App) {
                     // the numbers alone change little: one row towards the pause, until a pause is on
                     if (!settings.anyPause) {
                         Rule()
-                        T(stringResource(R.string.nudge), Modifier.fillMaxWidth().noRippleClickable { nav.push(Screen.Settings) }.padding(horizontal = rowPadH, vertical = 14.dp), size = typo.title, maxLines = 4)
+                        // a card with a colour theme, the text keeping the page's inset
+                        T(stringResource(R.string.nudge), Modifier.fillMaxWidth().tileCard().noRippleClickable { nav.push(Screen.Settings) }.padding(horizontal = if (LocalColors.current.tiles) rowPadH - tileGap else rowPadH, vertical = 14.dp), size = typo.title, maxLines = 4)
                     }
                     VSpace(12.dp)
                 }
@@ -214,7 +221,7 @@ fun WeekScreen(nav: Nav, app: App) {
                     val avg = Words.weekAverage(Sessions.average(days.drop(1)), res) ?: stringResource(R.string.week_none)
                     Small(avg, Modifier.padding(horizontal = rowPadH).padding(top = 14.dp, bottom = 6.dp), maxLines = 2)
                     val today = LocalDate.now()
-                    days.forEach { d -> TextRow(Words.weekRow(d, today, res), size = typo.title) }
+                    days.forEach { d -> ReadRow(Words.weekRow(d, today, res), size = typo.title) }
                 }
             }
             Box(Modifier.windowInsetsPadding(WindowInsets.navigationBars))
@@ -247,7 +254,7 @@ fun AppDayScreen(nav: Nav, app: App, pkg: String) {
                     appDay?.sessions?.forEach { s ->
                         // the answer given at the start of this opening, if the pause was on
                         val a = answers.firstOrNull { it.t >= s.start - 5_000 && it.t <= minOf(s.end, s.start + 120_000) }
-                        TextRow(Words.sessionLine(s, a?.let { it.text ?: answerWords.getOrNull(it.index) }, res), size = typo.title)
+                        ReadRow(Words.sessionLine(s, a?.let { it.text ?: answerWords.getOrNull(it.index) }, res), size = typo.title)
                     }
                 }
             }
